@@ -7,7 +7,6 @@
 | static state    | dynamic state      |
 | on HDD          | on memory          |
 | before creating | before terminating |
-| CPU ||
 
 ## architecture
 
