@@ -1,5 +1,5 @@
-[1. 운영체제개요](./os_w1_intro)<Br/>
-[2. (컴퓨터) 시스템구조](./os_w2_architecture)<Br/>
+[1. 운영체제개요](./os_w1_intro.md)<Br/>
+[2. (컴퓨터) 시스템구조](./os_w2_architecture.md)<Br/>
 [3. 프로세서관리](./os_w3_process.md)<Br/>
 
 <hr/>

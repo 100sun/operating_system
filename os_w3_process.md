@@ -1,6 +1,13 @@
 # 3.1 Introduction to Process
 
-## process vs program
+## program vs process
+
+| program | process |
+| ------ | ------ |
+| static state | dynamic state |
+| on HDD | on memory |
+| before creating | before terminating |
+| <td colspan=2> CPU |
 
 ## architecture
 
