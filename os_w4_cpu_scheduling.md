@@ -23,7 +23,7 @@
     - ex. explorer
     - +) time, resource, efficiency
 
-<img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300"/>
+<img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300" style="float:left"/>
 
 # 4.1 Introduction to Scheduling
 
@@ -52,7 +52,7 @@ how to express process-scheduling
 
 1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process on Ready Queue
 2. Ready queue -> (short-term scheduler: select process) -> (dispatcher: assign) -> Processor
-3. Processor -> 
+3. Processor -> waiting, being interrupted, being paused
     1. (short-term scheduler) IO request -> IO Device Queue: blocked and waiting -> IO Device
     2. (short-term scheduler) time-out for assignment
     3. (short-term scheduler) interrupt
@@ -63,7 +63,29 @@ how to express process-scheduling
 
 5. done
 
-# 4.2 scheduling
+# 4.2 Considerations for Scheduling
+
+## Scheduling Algorithm
+
+| basis | Preemptive Scheduling | Non-Preemptive Scheduling |
+| when can start a new process | suspended by OS or interrupted | unless termination of the process or I/O |
+|  | response time ↑ | throughput ↓ (even io bound job has to wait for a long time) |
+| example | time-sharing | batch system |
+
+### criteria 
+
+CPU Utilization ↑ Throughput ↑ Waiting Time ↓ Response Time ↓ Turn-around time ↓ => A Better Algorithm
+
+* waiting time: ~ start execution of process
+* response time: ~ start first output of process
+* turn-around time: ~ terminate and turn out all the resources
+
+## Process Priority  
+
+* kernal > general process
+* foreground > background process
+* interactive > batch process
+* IO bound job > CPI bound job
 
 # 4.3 Multilevel Queue
 
