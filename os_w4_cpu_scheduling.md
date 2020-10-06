@@ -68,8 +68,9 @@ how to express process-scheduling
 ## Scheduling Algorithm
 
 | basis | Preemptive Scheduling | Non-Preemptive Scheduling |
+| ---- | ---- | ---- |
 | when can start a new process | suspended by OS or interrupted | unless termination of the process or I/O |
-|  | response time ↑ | throughput ↓ (even io bound job has to wait for a long time) |
+| --- | response time ↑ | throughput ↓ (even io bound job has to wait for a long time) |
 | example | time-sharing | batch system |
 
 ### criteria 
