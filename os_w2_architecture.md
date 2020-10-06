@@ -44,37 +44,86 @@ one cycle = 1-0
 
 * short-term memory
     - **D**ynamic **R**andom **A**ccess **M**emory: in main memory
-    - **S**tatic **R**andom **A**ccess **M**emory: in cache of CPU
+    - **S**tatic **R**andom **A**ccess **M**emory: in Cache of CPU
 * long-term memory
     - flash memory: in USB
     - Solid State Drive: replacing HDD 
 
-## Hierarchy Architecture
+## Hierarchy
 
-### CPU (register > processor > cache) > main memory > HDD
+| CPU: register > processor > cache > main memory > HDD |
+| --------------------------------------------------- |
+| -------------------------------------------------------------------------> price↓ speed↓ size↑ |
 
--------------------------------------------------------------------------> price↓ speed↓ size↑<Br/>
+* Processor: gives 8bit(1byte) **address** to memory and the memory gives back **data** by the address to the processor
 
-* processor gives 8bit(1byte) address to memory and the memory gives back data by the address to the processor
+## Why Protection is needed
+
+now time-sharing system => can invade other program's memory: interrupt -> terminate it
+
+## Booting Process
+
+: load operating system to memory
+
+* ROM's command to CPU
+    1. POST: test
+    2. CPU copies boot-strap-code from 0 sector in HDD to RAM
+    3. CPU executes boot-strap-code by kernal of RAM which was copied from kernal in HDD by the process of OS 
 
 # 2.3 computer performance improvement technology
 
-Dual mode
+## Dual mode when CPU works
 
-* Kernel mode
-* User mode
+CPU <-> Program(user+OS)
 
-## Interrupt
+* Kernel mode by kernal process relevant to the OS (more authority)
+    - mode_bit = 0
+* User mode by user process
+    - mode_bit = 1
 
-### types
+## Hardware Mechanisum
 
-* S/W Interrupt (=Trap)
-    - system call
-    - exception
-* H/W Interrupt
-* Timer Interrupt
+### Polling
 
-### the way
+: in order(X) 
 
-* Polling: in order(X)
-* Interrupt: in order(O)
+* CPU steadily checks whether the device needs attention
+
+``` c
+void main(void){
+    while(1){
+        if(button_pressed)
+            do_something();
+    }
+}
+```
+
+### Interrupt
+
+: in order(O)  
+
+* the device notices the CPU that it requires its attention. Interrupt can take place at any time.
+
+``` c
+Interrupt_Service_Routine(BUTTON_PRESS_vect){
+    do_something();
+}
+
+void main(void){
+    setup_button_press_interrupt();
+    while(1){
+    }
+}
+```
+
+* request 𝜇P to work instantly for the event 
+* user mode -> kernal mode
+
+#### Types
+
+* **S/W Interrupt** via Kernal of OS
+    - system call: the job when program1 requests OS to interrupt -> Program Count moves from program1 to ISR of OS
+    - exception: by checking [what mode](##Dual-mode-when-CPU-works) of CPU now via mode_bit
+* **H/W Interrupt** via 𝜇C
+    - : the job when IO device requests OS to interrupt for program1 -> Program Count moves from the program1 to ISR
+* **Timer Interrupt**: Time Sharing System by setting timer via time slice
