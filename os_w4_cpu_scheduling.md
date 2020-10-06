@@ -23,7 +23,7 @@
     - ex. explorer
     - +) time, resource, efficiency
 
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cs.uic.edu%2F~jbell%2FCourseNotes%2FOperatingSystems%2F4_Threads.html&psig=AOvVaw0xfFa56efL1QKEnV2xiZa-&ust=1602077223943000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDM__GIoOwCFQAAAAAdAAAAABAD" height = "300"/>
+<img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300"/>
 
 # 4.1 Introduction to Scheduling
 
