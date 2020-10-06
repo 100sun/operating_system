@@ -73,7 +73,7 @@ how to express process-scheduling
 | --- | response time ↑ | throughput ↓ (even IO bound job has to wait for a long time) |
 | example | time-sharing | batch system |
 
-### criteria 
+## The Criteria 
 
 CPU Utilization ↑ Throughput ↑ Waiting Time ↓ Response Time ↓ Turn-around time ↓ => A Better Algorithm
 
