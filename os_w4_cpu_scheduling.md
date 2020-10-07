@@ -50,9 +50,9 @@ how to execute a process
 
 how to express process-scheduling
 
-1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process on Ready Queue
-2. Ready queue -> (short-term scheduler: select process) -> (dispatcher: assign) -> Processor
-3. Processor -> waiting, being interrupted, being paused
+1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process in the Ready Queue
+2. Ready queue -> (short-term scheduler: select one PCB) -> (dispatcher: assign) -> Processor
+3. Processor -> blocked, interrupted, paused
     1. (short-term scheduler) IO request -> IO Device Queue: blocked and waiting -> IO Device
     2. (short-term scheduler) time-out for assignment
     3. (short-term scheduler) interrupt
