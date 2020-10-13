@@ -25,6 +25,8 @@
 
 <img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300" style="float:left"/>
 
+<Br/>
+
 # 4.1 Introduction to Scheduling
 
 ## What is scheduling
@@ -85,9 +87,10 @@ CPU Utilization ↑ Throughput ↑ Waiting Time ↓ Response Time ↓ Turn-aroun
 
 * kernal > general process
 * foreground > background process
-* interactive > batch process
+* interactive > batch procen ss
 * IO bound job > CPI bound job
 
 # 4.3 Multilevel Queue
 
 # 4.4 Scheduling Algorithm
+ 
