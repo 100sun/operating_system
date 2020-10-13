@@ -341,22 +341,88 @@ how to express process-scheduling
 | ---- | ---- | ---- |
 | when can start a new process | suspended by *OS or interrupted* | unless *termination* of the process or I/O |
 | --- | response time ↑ | throughput ↓ <Br/>(even IO bound job has to wait for a long time) |
-| [e.g.](#by-algorithms) | SRT, RR | FCFS, SJF, HRN |
+| [e.g.](#Priority-Scheduling) | SRT, RR | FCFS, SJF, HRN |
 
-### Priority Scheduling
+## Process Priority  
+
+* kernal > general process
+* foreground > background process
+* interactive > batch process
+* IO bound job > CPI bound job
+
+# 4.3 Multilevel Queue
+
+### IO Interrupt
+
+more than 2 io interrupts can happen simultaneously 
+
+1. mouse moved, interrupt happened -> current process: paused, out of CPU
+2. temporarily store the info of the process
+3. **Interrupt Vector Table**: address of ISR -> Interrupt Service Routine: code -> 
+4. CPU: handle that interrupt -> restart the process
+
+## Multilevel Queue
+
+by priority of the multiple ready-queues
+
+* ex. queue 0: HDD -> queue 1: CD-ROM -> ...
+
+### Priority
+
+||Static Priority|Dynamic Priority|
+|----|----|----|
+|priority|[cannot be changed](#Multilevel-Queue-Scheduling)|[can be changed](#Multilevel-Feedback-Scheduling)|
+|work|↓|↑|
+|efficiency|↓|↑|
+
+### State
+
+1. **ready**: dispatch *one* process
+    - priority in PCB: insert process in that specific priority queue 
+    - CPU scheduler: dispatch the prior process to the CPU
+2. **waiting**: make *multiple* processes be ready
+    - check IV table: make the prior process in that specific priority queue be ready 
+
+# 4.4 Scheduling Algorithm
+
+## Priority Scheduling
 
 * ex: FCFS, SJF, HRN, [static, dynamic](#priority)
 * -: starvation(∵convoy effect), overhead(∵context-switching)-> low efficiency
-* => solution: aging, SRT(considering waiting time as well)
+* => solution: [aging](#Multilevel-Feedback-Queue-Scheduling), considering waiting time as well(SRT)
 
-||FCFS|SJF|HRN|SRT|RR|
-|---|---|---|---|---|---|
-|alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|Round Robin|
-|type|non-preemptive|||preemptive(time slice O [re-scheduling](#context-switching) O)||
-|priority↑|waiting_time↓|burst_time↓|(waiting_time/CPU_burst_length)+1↓|remained_burst_time↓|--(just ready queue..)|
-|disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still |starvation + context switching|AWT⇑<br/>(advs:*response time⇓*)|
+||FCFS|SJF|HRN|SRT|
+|---|---|---|---|---|
+|alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|
+|type|non-preemptive|||preemptive(time slice O [re-scheduling](#context-switching) O)|
+|priority↑|waiting_time↓|burst_time↓|(waiting_time/CPU_burst_length)+1↓|remained_burst_time↓|
+|disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still|
 
-* AWT/ART: SRT < SJF < HRN < FCFS < RR
+## Round Robin Scheduling
+
+RR: just in order of the ready queue
+
+### advs
+
+response time ⇓
+
+### disadvs
+
+* time slice⇑ ≈ FCFS: AWT⇑ -> starvation
+* time slice⇓ ≈ SRT: context switching -> low efficiency
+
+## [Multilevel Queue](#Multilevel-Queue) Scheduling
+
+by static priority
+
+## Multilevel Feedback Queue Scheduling
+
+by dynamic priority
+
+* each ready-queue: **priority↓ time slices⇑** the rate to burst CPU↓ CPU burst length⇑ 
+* ex: *IO burst job*: TS⇓* -> CPU burst job*: TS⇑.. *->* ***FCFS***: TS=∞(∵ it has been moved lots.. 😞)
+* *aging*: a process that waits too long in a lower-priority queue may be moved to a higher-priority queue.
+* hard to build and implement
 
 ## Scheduling Criteria
 
@@ -396,48 +462,7 @@ w/ Gantt Chart
 |P3|2|8|
 |P4|3|16|
 
-<img src="https://github.com/100sun/operating_system/blob/master/cpu_scheduling_evaluation_ex.png" height=200/>
+<img src="https://github.com/100sun/operating_system/blob/master/cpu_scheduling_evaluation_ex.png" height=400/>
 
 </details>
 => AWT/ART: SRT < SJF < HRN < FCFS < RR
-
-## Process Priority  
-
-* kernal > general process
-* foreground > background process
-* interactive > batch process
-* IO bound job > CPI bound job
-
-# 4.3 Multilevel Queue
-
-### IO Interrupt
-
-more than 2 io interrupts can happen simultaneously 
-
-1. mouse moved, interrupt happened -> current process: paused, out of CPU
-2. temporarily store the info of the process
-3. **Interrupt Vector Table**: address of ISR -> Interrupt Service Routine: code -> 
-4. CPU: handle that interrupt -> restart the process
-
-## Multilevel Queue
-
-### Priority
-
-Multilevel Queue processes by priority: like priority 0 queue: HDD ->  priority 1 queue: CD-ROM -> 
-
-||Static Priority| Dynamic Priority|
-|----|----|----|
-|work|↓|↑|
-|efficiency|↓|↑|
-
-### State
-
-1. **ready**: dispatch *one* process
-    - priority in PCB: insert process in that specific priority queue 
-    - CPU scheduler: dispatch the prior process to the CPU
-2. **waiting**: make *multiple* processes be ready
-    - check IV table: make the prior process in that specific priority queue be ready 
-
-# 4.4 Scheduling Algorithm
-
-## 
