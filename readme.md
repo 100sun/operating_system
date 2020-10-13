@@ -345,9 +345,18 @@ how to express process-scheduling
 
 ### Priority Scheduling
 
-* ex: [FCFS, SJF, HRN](#by-algorithms), [static, dynamic](#priority)
+* ex: FCFS, SJF, HRN, [static, dynamic](#priority)
 * -: starvation(∵convoy effect), overhead(∵context-switching)-> low efficiency
 * => solution: aging, SRT(considering waiting time as well)
+
+||FCFS|SJF|HRN|SRT|RR|
+|---|---|---|---|---|---|
+|alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|Round Robin|
+|type|non-preemptive|||preemptive(time slice O [re-scheduling](#context-switching) O)||
+|priority↑|waiting_time↓|burst_time↓|(waiting_time/CPU_burst_length)+1↓|remained_burst_time↓|--(just ready queue..)|
+|disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still |starvation + context switching|AWT⇑<br/>(advs:*response time⇓*)|
+
+* AWT/ART: SRT < SJF < HRN < FCFS < RR
 
 ## Scheduling Criteria
 
@@ -375,10 +384,10 @@ w/ Gantt Chart
 * Turnaround time is the sum of the periods spent waiting to get into memory, waiting in the ready queue, executing on the CPU, and doing I/O. / num of processes
 * time until turned around - arrival time
 
-### by algorithms
+#### problem
 
 <details>
-<summary>problem</summary>
+<summary>open</summary>
 
 |process|arrival time|execution time|
 |---|---|---|
@@ -389,17 +398,8 @@ w/ Gantt Chart
 
 <img src="https://github.com/100sun/operating_system/blob/master/cpu_scheduling_evaluation_ex.png" height=200/>
 
-=> AWT/ART: SRT < SJF < HRN < FCFS < RR
 </details>
-
-||FCFS|SJF|HRN|SRT|RR|
-|---|---|---|---|---|---|
-|alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|Round Robin|
-|type|non-preemptive|||preemptive(time slice O [re-scheduling](#context-switching) O)||
-|priority↑|waiting_time↓|burst_time↓|(waiting_time/CPU_burst_length)+1↓|remained_burst_time↓|--(just ready queue..)|
-|disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still |starvation + context switching|AWT⇑<br/>(advs:*response time⇓*)|
-
-* AWT/ART: SRT < SJF < HRN < FCFS < RR
+=> AWT/ART: SRT < SJF < HRN < FCFS < RR
 
 ## Process Priority  
 
