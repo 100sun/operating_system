@@ -466,3 +466,111 @@ w/ Gantt Chart
 
 </details>
 => AWT/ART: SRT < SJF < HRN < FCFS < RR
+
+# 5.2 Shared Resource and Critical Section
+
+## concurrency problem
+
+* A *race condition* is a situation when *cooperating threads*(<->independent threads) code that would access a *shared resource* could do so in such a way as to cause unexpected results.
+*  ex. producer-consumer problem: inconsistent num of resources, sharing hardware resources: printer
+
+=> they need **synchronization**
+
+* how? *atmoic operation*: cannot stop operation 
+* then? **mutual exclusion**(mutex): only one process in **critical section**
+
+# 5.3 Critical Section Synchronization
+
+how to resolve synchronization
+
+## conditions
+
+1. using 1 boolean variable: cause **mutex**(multi processes in critical section)
+2. using 2 boolean variables: cause **bounded waiting**(stuck forever)
+3. using 1 integer variable: cause **progress flexibility**(if p2 stopped, p1 cannot go ahead)
+
+## solution
+
+### 1. **test-and-set code** at the same time supported by HW
+
+``` cpp
+lock = true; while(lock == true)
+```
+
+### 2. **Peterson** Algorithm
+
+* *using 2 variables - lock, *turn* 
+* BUT can cause busy-waiting
+
+``` cpp
+while(lock1==true && turn==2)
+```
+
+### 3. **Dekker** Algorithm
+
+* *using 2 variables - lock, *turn* 
+* BUT can cause busy-waiting
+
+    
+
+``` cpp
+while(lock2==true) {
+
+    if(turn==1){
+        lock1=false; 
+        while(turn==2); 
+        lock1=true;
+    }
+}
+```
+
+### 4. **Semaphore** Tool
+
+: an integer variable S which indicate the number of resources(ticket) available in the system
+
+#### process access the shared resources
+
+* atmoic operations on S
+    - P(): disable interrupts -> acquire -> enable interrupts
+    - S(): disable interrupts -> release -> enable interrupts
+* BUT can cause deadlock 
+
+``` cpp
+Semaphore() //initiate
+
+P(){ // wait()
+    block() // to the semaphore queue 
+}
+// critical section 
+
+V(){ // signal()
+    wake_up() // to the ready queue of OS
+}
+```
+
+### 5. **Monitor**
+
+: abstract data types
+
+1. shared data variables: only by the procedures
+2. procedures(only one procedure can be executed at a time))
+
+#### process access the shared variables in the monitor
+
+access it through the procedures.
+
+### ex. producer-consumer problem
+
+* pro(): after empty.signal 
+* con(): after full.signal
+
+``` cpp
+pro(){
+    if(full){
+        full.signal();
+        full.wait() // suspended in block queue of that condition variable 
+        // empty.signal();
+        sum+=1; // executed and processing about the shared variable
+    }
+}
+```
