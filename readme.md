@@ -1,54 +1,98 @@
 # 1.1 Introduction to OS
 
-## relationship
+## computer
 
-* user > sw > hw
-* sw: application software > operating system
-* OS ex. ios, android, windows
+* internal parts) on motherboard: the processor (CPU), memory (RAM), hard drive, and video card
+* external parts) not on motherboard - I/O devices - monitor, keyboard, mouse
 
-## role
+## hierarchy
+
+* user > app s/w > system s/w > h/w
+* application > shell > kernel > HW
+
+### Shell
+
+* interpreting user's command
+* the interface between the kernel and user
+
+### kernel
+
+* the core of the operating system that controls all the tasks of the system
+* power-on: OS on HDD -> kernel on memory ~ until power-off
+
+## role of OS
 
 * performance ↑
-    - **resource management, allocation** 
-        - SW management: manage process, file,,,
+    - 1. **resource management**(allocation)
+        - S/W management: manage process, file,,,
         - processor management: manage CPU
         - memory management: manage memory
         - file management: manage HDD
         - IO management: manage keyboard, monitor, printer
-    - resource protection ex. prevent from monopolizing CPU
+    - 2. resource protection
+        - ex. prevent from monopolizing CPU
 * convenience ↑
-    - hw interface
-    - user interface 
+    - 3. H/W interface
+    - 4. user interface 
         - ex. GUI
 
-# 1.2 Architecture of Computer
+=> efficiency, reliability, scalability, convenience
 
-CPU scheduling (Processor management)
-Memory management
-Disk(HDD) scheduling
-Interrupt
-메모리에 여러 프로그램이 올라가면 cpu에서 읽어가서 실행 -> 1cpu이기에 매우 빠른 switching으로 illusion 제공
+# 1.2 History of OS
 
-## 1.3 internal parts of computer
+## 1940s
 
-on motherboard<br/>
-: register, 
+ENIAC
 
-## 1.4 external parts of computer
+* contained vacuum tubes
+    - on: 1, off:0
+* in the way of external program: hard-wiring
+* no OS, instead operator managing system
+    - punched card reader -> processor + memory -> line printer
 
-not on motherboard<br/>
-I/O devices: monitor, keyboard, mouse
+The term "von Neumann architecture" has evolved to mean any stored-program computer in which an instruction fetch and a data operation cannot occur at the same time because they share a common bus. This is referred to as the von Neumann bottleneck and often limits the performance of the system.[3]
 
-* kernel: resource manager in OS 
+## 1950s
 
-    전원 off 될때까지 메모리에서 계속 상주하는 부분 
+batch processing system
 
-* Shell = command interpreter
+* yes OS, using resident monitor 
+    - punched card reader -> processor + memory > OS + user -> line printer
 
-    : User 명령 받아서 해석하여 실행 
+## early 1960s
 
-hdd 비휘발성에 보조기억장치
-os에 -> memory dram 주기억장치 휘발성 전원이 꺼질때부터 겨질태
+interactive system
+
+* user <-> monitor, keyboard <-> memory > OS + user
+
+## mid 1960s
+
+multiprogramming system
+
+* multiple jobs at the same time on 1 CPU
+* => OS needs to do cpu scheduling, memory management...
+
+## late 1960s
+
+time sharing system = multitasking system
+
+* interactive computer
+* time slice = time quantum
+
+## late 1970s
+
+distributed system
+
+* personal computer
+* mainframe X distributed system by TCP/IP O
+
+## 1990s-now
+
+client/server system
+
+## early 2000s-now
+
+P2P system
 
 # 2.1 basic configuration
 
