@@ -618,8 +618,8 @@ Resource-Allocation Graph
 
 * **process**: circle
 * **resource**: square, *instances*: dots
-* process **<-** resource : allocation
-* process **->** resource : request
+* process **<-** resource : allocation edges
+* process **->** resource : request edges
 
 => resources: request -> use -> release
 
@@ -634,12 +634,12 @@ a situation where the several processes in CPU compete for the finite number of 
 
 There are four conditions which must occur *simultaneously* to *raise* the condition of *deadlock.*
 
-1. Mutex(Mutual exclusion): sharing forks X
+1. Mutual exclusion: sharing forks X
     - *Only one process at a time* can use a resource if other process requests the same resource, it has to *wait* till the process using resource releases it.
-2. Hold and Wait: monopolization of two forks X
-    - A process must be *holding* a resource and *waiting* to acquire another resource that is held by some other process.
-3. No Preemption: taking away forks X
+2. No Preemption: taking away forks X
     - The process holding the resources can not be preempted. The process holding the resource *must release the resource* voluntarily when it has completed its task.
+3. Hold and Wait: monopolization of two forks X
+    - A process must be *holding* a resource and *waiting* to acquire another resource that is held by some other process.
 4. Circular wait: a linear table, in order O
     - The process must wait for resources *in a circular* fashion.
 
@@ -647,23 +647,62 @@ There are four conditions which must occur *simultaneously* to *raise* the condi
 
 ### 1. deadlock prevention
 
-(BEFORE) not to meet at least one condition
+(BEFORE) Deadlocks can be prevented by preventing at least one of the four required conditions:
 
-1. Mutex(Mutual exclusion): sharing forks X
-    - *Only one process at a time* can use a resource if other process requests the same resource, it has to *wait* till the process using resource releases it.
-2. Hold and Wait: monopolization of two forks X
-    - A process must be *holding* a resource and *waiting* to acquire another resource that is held by some other process.
-3. No Preemption: taking away forks X
-    - The process holding the resources can not be preempted. The process holding the resource *must release the resource* voluntarily when it has completed its task.
-4. Circular wait: a linear table, in order O
-    - The process must wait for resources *in a circular* fashion.
+1. Mutex: unrealistic
+2. No Preemption: unrealistic
+3. Hold and Wait: processes holding resources must release them before requesting new resources, and then re-acquire them
+    - -) it is hard to *know* all the resources it has
+    - -) the *time* that it need that resource is changeable
+    - -) A process that requires *lots of resources <* A process that requires a few resources 
+    - -) *batch* system
+4. Circular wait: number all resources
+
+=> Even thought deadlock is not often, these ways restrict process
 
 ### 2. deadlock avoidance
 
-(BEFORE) manage resources allocation 
+(BEFORE) 
+manage resources allocation allowing only safe state 
+
+* State: safe -> unsafe -> deadlocked ∝ the num of allocated resources
+
+1. Single Instance<sub>/ resource types
+    - **Resource Allocation Graph Algorithm**) deadlock states: can be detected by cycles in the RSA graphs
+    - request edges, allocation edges, *claim edges*
+2. Multiple Instance<sub>/ resource types
+    - Banker's Algorithm) Safe states = ***Expect****=Max-Allocation* ***=<*** ***Available****=Total-ΣAllocation*
+        - ex. allocate -> return its Max -> allocate to other one -> .. => Total == Available
+
+=> 
+
+* -) need to declare all the resources in advance
+* -) fixed Total resources
+* -) even available -> not allocate => inefficient 
 
 ### 3. deadlock detection & recovery
 
 (AFTER) monitoring the resource-allocation graph and recovering it
 
+* NO MAX, allocate the available resources right away
+
+#### deadlock detection
+
+1. Single Instance<sub>/ resource types
+    - **Resource Allocation Graph Algorithm**) deadlock states: can be detected by cycles in the RSA graphs
+    - request edges, allocation edges
+2. Multiple Instance<sub>/ resource types
+    - Banker's Algorithm)***Request=<Available****=Total-ΣAllocation*
+        - ex. first allocate to the process whose request == 000 ∵ it will return soon => Total == Available
+
+#### deadlock recovery
+
+1. process termination: all the processes || one by one in order 
+2. resource preemption: preempt a resource from the least-cost process => starvation => considering counts to call to preempt
+
 ### 4. deadlock ignorance
+
+the way to resolve deadlock makes overload on system
+
+* => ignore deadlock on os
+* => users cover it
