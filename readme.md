@@ -1,11 +1,12 @@
 # 1.1 Introduction to OS
 
-## computer
+## Computer
 
 * internal parts) on motherboard: the processor (CPU), memory (RAM), hard drive, and video card
 * external parts) not on motherboard - I/O devices - monitor, keyboard, mouse
+* von Neumann architecture: CPU, Main Memory, IO devices
 
-## hierarchy
+## System Hierarchy
 
 * user > app s/w > system s/w > h/w
 * application > shell > kernel > HW
@@ -40,9 +41,7 @@
 
 # 1.2 History of OS
 
-## 1940s
-
-ENIAC
+## 1940s: ENIAC
 
 * contained vacuum tubes
     - on: 1, off:0
@@ -50,49 +49,35 @@ ENIAC
 * no OS, instead operator managing system
     - punched card reader -> processor + memory -> line printer
 
-The term "von Neumann architecture" has evolved to mean any stored-program computer in which an instruction fetch and a data operation cannot occur at the same time because they share a common bus. This is referred to as the von Neumann bottleneck and often limits the performance of the system.[3]
-
-## 1950s
-
-batch processing system
+## 1950s: batch processing system
 
 * yes OS, using resident monitor 
     - punched card reader -> processor + memory > OS + user -> line printer
 
-## early 1960s
-
-interactive system
+## early 1960s: interactive system
 
 * user <-> monitor, keyboard <-> memory > OS + user
 
-## mid 1960s
-
-multiprogramming system
+## mid 1960s: multiprogramming system
 
 * multiple jobs at the same time on 1 CPU
 * => OS needs to do cpu scheduling, memory management...
 
-## late 1960s
+## late 1960s: time sharing system
 
-time sharing system = multitasking system
+ = multitasking system
 
 * interactive computer
 * time slice = time quantum
 
-## late 1970s
-
-distributed system
+## late 1970s: distributed system
 
 * personal computer
 * mainframe X distributed system by TCP/IP O
 
-## 1990s-now
+## 1990s-now: client/server system
 
-client/server system
-
-## early 2000s-now
-
-P2P system
+## early 2000s-now: P2P system
 
 # 2.1 basic configuration
 
@@ -118,25 +103,26 @@ one cycle = 1-0
 
 ## how to execute a source file
 
-1. second memory: compile process
+1. second memory: compiling process
     - .c -> (compiler) -> .obj -> (linker-libs) -> .exe
-2. load on main memory
+2. loads on main memory
     - instruction memory | data memory
-3. process the Instruction cycle between main memory <->  CPU
+3. process the [Instruction cycle](#-Instruction-Cycle) between main memory <->  CPU
 
 ## Instruction Cycle
 
-1. **Fetch** the addresses of instructions stored in instruction memory to ***Program Counter*** of CPU
+1. **Fetch** the addresses of instructions stored in *instruction memory* to ***Program Counter*** of CPU
 2. **Decode** the instructions(machine code) by each processors and set the configuration of registers and ALU on ***Control Unit*** of CPU, 
 3. **Execute** it on ***ALU***
 4. **Store** it on GPR or data memory
-    - ***registers***: faster than memory
-        - General Purpose Register: data processing...
-        - Special Purpose Register: for PC, IR, SP...
+
+* ***registers***: faster and more expensive than memory
+    - General Purpose Register: data processing...
+    - Special Purpose Register: for PC, IR, SP...
 
 # 2.2.1 Memory
 
-## Types
+## Memory Types 
 
 * short-term memory
     - **D**ynamic **R**andom **A**ccess **M**emory: in main memory
@@ -145,26 +131,26 @@ one cycle = 1-0
     - flash memory: in USB
     - Solid State Drive: replacing HDD 
 
-## Hierarchy
+## Memory Hierarchy 
 
-| CPU: register > processor > cache > main memory > HDD |
+| CPU (register > processor > cache) > main memory > HDD |
 | --------------------------------------------------- |
 | -------------------------------------------------------------------------> price↓ speed↓ size↑ |
 
-* Processor: gives 8bit(1byte) **address** to memory and the memory gives back **data** by the address to the processor
+* Processor: gives 8bit(1byte) **address** to memory and the *memory* gives back **data** by the address to the processor
 
 ## Why Protection is needed
 
-now time-sharing system => can invade other program's memory: interrupt -> terminate it
+now time sharing system => can invade other program's memory: interrupt -> terminate it
 
 ## Booting Process
 
-: load operating system to memory
+: load OS to memory
 
 * ROM's command to CPU
     1. POST: test
-    2. CPU copies boot-strap-code from 0 sector in HDD to RAM
-    3. CPU executes boot-strap-code by kernal of RAM which was copied from kernal in HDD by the process of OS 
+    2. CPU copies **boot-strap-code** from 0 sector in HDD to *RAM*
+    3. CPU executes **boot-strap-code** by *kernal of RAM* which was copied from *kernal in HDD* by the process of OS 
 
 # 2.3 computer performance improvement technology
 
@@ -172,12 +158,10 @@ now time-sharing system => can invade other program's memory: interrupt -> termi
 
 CPU <-> Program(user+OS)
 
-* Kernel mode by kernal process relevant to the OS (more authority)
-    - mode_bit = 0
-* User mode by user process
-    - mode_bit = 1
+* mode_bit = 0: Kernel mode by kernel process (more authority)
+* mode_bit = 1: User mode by user process
 
-## Hardware Mechanisum
+## Hardware Mechanism
 
 ### Polling
 
@@ -618,3 +602,68 @@ pro(){
     }
 }
 ```
+
+# 6.1 Introduction to Deadlock
+
+## what is?
+
+* Deadlock(=Circular wait): by the relationship between more than 2 processes
+    - requested resources are blocked by the other processes
+* Starvation: by OS
+    - the requested resources are continuously used by high priority processes.
+
+## how to express?
+
+Resource-Allocation Graph
+
+* **process**: circle
+* **resource**: square, *instances*: dots
+* process **<-** resource : allocation
+* process **->** resource : request
+
+=> resources: request -> use -> release
+
+## when?
+
+a situation where the several processes in CPU compete for the finite number of resources available within the CPU
+
+* shared variable: flag
+* Dining philosophers problem: at a round table
+
+### conditions
+
+There are four conditions which must occur *simultaneously* to *raise* the condition of *deadlock.*
+
+1. Mutex(Mutual exclusion): sharing forks X
+    - *Only one process at a time* can use a resource if other process requests the same resource, it has to *wait* till the process using resource releases it.
+2. Hold and Wait: monopolization of two forks X
+    - A process must be *holding* a resource and *waiting* to acquire another resource that is held by some other process.
+3. No Preemption: taking away forks X
+    - The process holding the resources can not be preempted. The process holding the resource *must release the resource* voluntarily when it has completed its task.
+4. Circular wait: a linear table, in order O
+    - The process must wait for resources *in a circular* fashion.
+
+## how to resolve?
+
+### 1. deadlock prevention
+
+(BEFORE) not to meet at least one condition
+
+1. Mutex(Mutual exclusion): sharing forks X
+    - *Only one process at a time* can use a resource if other process requests the same resource, it has to *wait* till the process using resource releases it.
+2. Hold and Wait: monopolization of two forks X
+    - A process must be *holding* a resource and *waiting* to acquire another resource that is held by some other process.
+3. No Preemption: taking away forks X
+    - The process holding the resources can not be preempted. The process holding the resource *must release the resource* voluntarily when it has completed its task.
+4. Circular wait: a linear table, in order O
+    - The process must wait for resources *in a circular* fashion.
+
+### 2. deadlock avoidance
+
+(BEFORE) manage resources allocation 
+
+### 3. deadlock detection & recovery
+
+(AFTER) monitoring the resource-allocation graph and recovering it
+
+### 4. deadlock ignorance
