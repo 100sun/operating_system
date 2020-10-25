@@ -1,5 +1,6 @@
 # contents
 
+* [contents](#contents)
 * [1.1 Introduction to OS](#11-Introduction-to-OS)
   + [Computer](#Computer)
   + [System Hierarchy](#System-Hierarchy)
@@ -17,7 +18,7 @@
   + [early 2000s-now: P2P system](#early-2000s-now-P2P-system)
 * [2.1 basic configuration](#21-basic-configuration)
   + [international units](#international-units)
-  + [how digital system works: **clocking**](#how-digital-system-works-**clocking**)
+  + [how digital system works: **clocking**](#how-digital-system-works-clocking)
 * [2.2.1 CPU](#221-CPU)
   + [how to execute a source file](#how-to-execute-a-source-file)
   + [Instruction Cycle](#Instruction-Cycle)
@@ -31,14 +32,13 @@
   + [Hardware Mechanism](#Hardware-Mechanism)
     - [Polling](#Polling)
     - [Interrupt](#Interrupt)
-			* [Types](#Types)
 * [3.1 Introduction to Process](#31-Introduction-to-Process)
   + [program vs process](#program-vs-process)
   + [Architecture ](#Architecture-)
     - [elements of memory ](#elements-of-memory-)
 * [3.2 Operation of Process](#32-Operation-of-Process)
   + [process hierarchy](#process-hierarchy)
-* [3.3 [States of a Process](#queuing-diagram)](#33-[States-of-a-Process](#queuing-diagram))
+* [3.3 States of a Process](#33-States-of-a-Process)
 * [3.4 Process Control Block & Context switching](#34-Process-Control-Block-&-Context-switching)
   + [PCB](#PCB)
   + [Context switching](#Context-switching)
@@ -46,7 +46,7 @@
     - [when](#when)
     - [process context](#process-context)
     - [how to switch](#how-to-switch)
-  + [disadvs ](#disadvs-)
+    - [disadvs](#disadvs)
 * [3.5 Thread](#35-Thread)
   + [What is Thread](#What-is-Thread)
   + [Concurrency ](#Concurrency-)
@@ -68,29 +68,25 @@
 * [4.4 Scheduling Algorithm](#44-Scheduling-Algorithm)
   + [Priority Scheduling](#Priority-Scheduling)
   + [Round Robin Scheduling](#Round-Robin-Scheduling)
-    - [advs](#advs)
-    - [disadvs](#disadvs)
-  + [[Multilevel Queue](#Multilevel-Queue) Scheduling](#[Multilevel-Queue](#Multilevel-Queue)-Scheduling)
+    - [advs of RR](#advs-of-RR)
+    - [disadvs of RR](#disadvs-of-RR)
+  + [Multilevel Queue Scheduling](#Multilevel-Queue-Scheduling)
   + [Multilevel Feedback Queue Scheduling](#Multilevel-Feedback-Queue-Scheduling)
   + [Scheduling Criteria](#Scheduling-Criteria)
     - [what is better](#what-is-better)
-			* [waiting time < response time < turn-around time](#waiting-time-<-response-time-<-turn-around-time)
   + [Algorithm Evaluation](#Algorithm-Evaluation)
     - [Average Waiting Time](#Average-Waiting-Time)
     - [Average Turn-around Time](#Average-Turn-around-Time)
-			* [problem](#problem)
 * [5.2 Shared Resource and Critical Section](#52-Shared-Resource-and-Critical-Section)
   + [concurrency problem](#concurrency-problem)
 * [5.3 Critical Section Synchronization](#53-Critical-Section-Synchronization)
   + [conditions](#conditions)
   + [solution](#solution)
-    - [1. **test-and-set code** at the same time supported by HW](#1-**test-and-set-code**-at-the-same-time-supported-by-HW)
-    - [2. **Peterson** Algorithm](#2-**Peterson**-Algorithm)
-    - [3. **Dekker** Algorithm](#3-**Dekker**-Algorithm)
-    - [4. **Semaphore** Tool](#4-**Semaphore**-Tool)
-			* [process access the shared resources](#process-access-the-shared-resources)
-    - [5. **Monitor**](#5-**Monitor**)
-			* [process access the shared variables in the monitor](#process-access-the-shared-variables-in-the-monitor)
+    - [1. **test-and-set code** at the same time supported by HW](#1-test-and-set-code-at-the-same-time-supported-by-HW)
+    - [2. **Peterson** Algorithm](#2-Peterson-Algorithm)
+    - [3. **Dekker** Algorithm](#3-Dekker-Algorithm)
+    - [4. **Semaphore** Tool](#4-Semaphore-Tool)
+    - [5. **Monitor**](#5-Monitor)
     - [ex. producer-consumer problem](#ex-producer-consumer-problem)
 * [6.1 Introduction to Deadlock](#61-Introduction-to-Deadlock)
   + [what is?](#what-is?)
@@ -101,11 +97,7 @@
     - [1. deadlock prevention](#1-deadlock-prevention)
     - [2. deadlock avoidance](#2-deadlock-avoidance)
     - [3. deadlock detection & recovery](#3-deadlock-detection-&-recovery)
-			* [deadlock detection](#deadlock-detection)
-			* [deadlock recovery](#deadlock-recovery)
     - [4. deadlock ignorance](#4-deadlock-ignorance)
-
-<hr/>
 
 # 1.1 Introduction to OS
 
@@ -357,7 +349,9 @@ void main(void){
     - data collection fail => **Zombie Process**
     - no parent process => **Orphan Process**
 
-# 3.3 [States of a Process](#queuing-diagram)
+# 3.3 States of a Process
+
+[in](#queuing-diagram)
 
 1. new + PCB => **ready**: waiting in the ready queue <-> running: one process executed by CPU => -PCB => terminated
 2. **running**: during time slice
@@ -397,7 +391,7 @@ io/timer interrupt -> ISR or context switching
 
 p2 ready, p1 running -> timeout -> store p1 state in PCB 1 -> get p2 state from PCB2 -> dispatch p2 -> p2 running, p1 ready 
 
-## disadvs 
+### disadvs
 
 overhead => [multi-thread](#Multi-Thread) to overhead ↓
 
@@ -539,17 +533,18 @@ by priority of the multiple ready-queues
 
 RR: just in order of the ready queue
 
-### advs
+### advs of RR
 
 response time ⇓
 
-### disadvs
+### disadvs of RR
 
 * time slice⇑ ≈ FCFS: AWT⇑ -> starvation
 * time slice⇓ ≈ SRT: context switching -> low efficiency
 
-## [Multilevel Queue](#Multilevel-Queue) Scheduling
+## Multilevel Queue Scheduling
 
+[multilevel-queue](#Multilevel-Queue)
 by static priority
 
 ## Multilevel Feedback Queue Scheduling
