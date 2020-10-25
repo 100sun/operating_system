@@ -68,13 +68,16 @@
   + [Scheduling Criteria](#scheduling-criteria)
   + [Algorithm Evaluation](#algorithm-evaluation)
 
-### Chp 5 Deadlock
+### Chp 5 Process Synchronization
 
 * [5.2 Shared Resource and Critical Section](#52-shared-resource-and-critical-section)
   + [concurrency problem](#concurrency-problem)
 * [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
   + [conditions](#conditions)
   + [solution](#solution)
+
+### Chp 6 Deadlock
+
 * [6.1 Introduction to Deadlock](#61-introduction-to-deadlock)
   + [what is?](#what-is?)
   + [how to express?](#how-to-express?)
