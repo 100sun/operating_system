@@ -90,7 +90,7 @@
 
 * internal parts) on motherboard: the processor (CPU), memory (RAM), hard drive, and video card
 * external parts) not on motherboard = I/O devices: monitor, keyboard, mouse
-* von Neumann architecture: CPU, Main Memory, IO devices
+* von Neumann architecture: CPU + Main Memory + IO devices
 
 ## System Hierarchy
 
@@ -174,14 +174,13 @@
 * p < n < μ < m < K < M < G < T
 * (SI) 10<sup>-4 < -3 < -2 < -1 < 1 < 2 < 3 < 4</su[]>
 
-## 🖩 how digital system works: **clocking**
+## 🖩 how digital H/W system works: by **clocking**
 
-one cycle = 1-0
+one cycle = from 1 ~ to 0
 
-* T(clock period): __seconds / one cycle
-* F(clock frequency): __cycles / a second
-
-=> T * F = 1
+* T(clock period): __seconds / one cycle (ps)
+* F(clock frequency): __cycles / a second (Hz)
+* T * F = s/c * c/s = 1
 
 # 2.2.1 CPU
 
@@ -195,14 +194,14 @@ one cycle = 1-0
 
 ## Instruction Cycle
 
-1. **Fetch** the addresses of instructions stored in *instruction memory* to ***Program Counter*** of CPU
-2. **Decode** the instructions(machine code) by each processors and set the configuration of registers and ALU on ***Control Unit*** of CPU, 
-3. **Execute** it on ***ALU***
-4. **Store** it on GPR or data memory
+1. **Fetch** the address of the next instruction -> PC, the value of the instruction -> IR
+2. **Decode** interpret the instruction in IR
+3. **Execute** it on ALU.
+4.  **Store** it on GPR or data memory
 
 * ***registers***: faster and more expensive than memory
     - General Purpose Register: data processing...
-    - Special Purpose Register: for PC, IR, SP...
+    - Special Purpose Register: e.g. Program Counter, Instruction Register, Stack Pointer...
 
 # 2.2.1 Memory
 
