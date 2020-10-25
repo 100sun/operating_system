@@ -89,13 +89,12 @@
 ## Computer
 
 * internal parts) on motherboard: the processor (CPU), memory (RAM), hard drive, and video card
-* external parts) not on motherboard - I/O devices - monitor, keyboard, mouse
+* external parts) not on motherboard = I/O devices: monitor, keyboard, mouse
 * von Neumann architecture: CPU, Main Memory, IO devices
 
 ## System Hierarchy
 
-* user > app s/w > system s/w > h/w
-* application > shell > kernel > HW
+**user >> app s/w >> system s/w** > shell > kernel **>> h/w**
 
 ### Shell
 
@@ -110,56 +109,57 @@
 ## role of OS
 
 * performance ↑
-    - 1. **resource management**(allocation)
+    1. **resource management**(allocation)
         - S/W management: manage process, file,,,
         - processor management: manage CPU
         - memory management: manage memory
         - file management: manage HDD
         - IO management: manage keyboard, monitor, printer
-    - 2. resource protection
+    2. resource protection
         - ex. prevent from monopolizing CPU
 * convenience ↑
-    - 3. H/W interface
-    - 4. user interface 
+    3. H/W interface
+    4. user interface 
         - ex. GUI
 
 => efficiency, reliability, scalability, convenience
 
 # 1.2 History of OS
 
-## 1940s: ENIAC
+## 1940s: no OS - vacuum tubes
 
-* contained vacuum tubes
-    - on: 1, off:0
-* in the way of external program: hard-wiring
-* no OS, instead operator managing system
-    - punched card reader -> processor + memory -> line printer
+* ENIAC: vacuum tubes on 1, off 0
+* no OS, instead *hard-wiring* => external program (<=> stored-program)
+
+## early 1950s: no os - operator
+
+* no OS, instead *operator*
+    - punched card reader -> **processor + memory** -> line printer
 
 ## 1950s: batch processing system
 
-* yes OS, using resident monitor 
-    - punched card reader -> processor + memory > OS + user -> line printer
+* yes OS, using *resident monitor* 
+    - punched card reader -> **processor + memory(OS + user)** -> line printer
 
 ## early 1960s: interactive system
 
-* user <-> monitor, keyboard <-> memory > OS + user
+* user **<->** monitor, keyboard **<->** memory(OS + user)
 
 ## mid 1960s: multiprogramming system
 
-* multiple jobs at the same time on 1 CPU
+* multiple jobs at the same time on 1 CPU 
 * => OS needs to do cpu scheduling, memory management...
 
 ## late 1960s: time sharing system
 
- = multitasking system
-
-* interactive computer
-* time slice = time quantum
+* = multitasking system 
+* by time slice = time quantum
+* interactive computer: connected monitor and keyboard to computer
 
 ## late 1970s: distributed system
 
+* mainframe(huge c.) X  => distributed system by TCP/IP O
 * personal computer
-* mainframe X distributed system by TCP/IP O
 
 ## 1990s-now: client/server system
 
@@ -169,14 +169,12 @@
 
 ## international units
 
-* (SI) 1km = 10<sup>3</sup>m / (IEC) 2<sup>10</sup>
-    - K < M < G < T
-    - 1 < 2 < 3 < 4
-* (SI) 1mm = 10<sup>-3</sup>m
-    - m > μ > n > p
-    - -1 > -2 > -3 > -4
+* International System of units: 10<sup>3</sup>
+* International Electrotechnical Commission: 2<sup>10</sup>
+* p < n < μ < m < K < M < G < T
+* (SI) 10<sup>-4 < -3 < -2 < -1 < 1 < 2 < 3 < 4</su[]>
 
-## how digital system works: **clocking**
+## 🖩 how digital system works: **clocking**
 
 one cycle = 1-0
 
