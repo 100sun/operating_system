@@ -174,7 +174,7 @@
 * p < n < μ < m < K < M < G < T
 * (SI) 10<sup>-4 < -3 < -2 < -1 < 1 < 2 < 3 < 4</su[]>
 
-## 🖩 how digital H/W system works: by **clocking**
+## how digital H/W system works: by **clocking**
 
 one cycle = from 1 ~ to 0
 
@@ -186,9 +186,9 @@ one cycle = from 1 ~ to 0
 
 ## how to execute a source file
 
-1. second memory: compiling process
+1. secondary memory(long-term memory): compiling process
     - .c -> (compiler) -> .obj -> (linker-libs) -> .exe
-2. loads on main memory
+2. loads on main memory(short-term memory)
     - instruction memory | data memory
 3. process the [Instruction cycle](#-Instruction-Cycle) between main memory <->  CPU
 
@@ -208,88 +208,83 @@ one cycle = from 1 ~ to 0
 ## Memory Types 
 
 * short-term memory
-    - **D**ynamic **R**andom **A**ccess **M**emory: in main memory
-    - **S**tatic **R**andom **A**ccess **M**emory: in Cache of CPU
+    - **D**ynamic **R**andom **A**ccess **M**emory: main memory
+    - **S**tatic **R**andom **A**ccess **M**emory: caches of CPU
 * long-term memory
-    - flash memory: in USB
-    - Solid State Drive: replacing HDD 
+    - flash memory: e.g. USB
+    - SSD(Solid State Drive): replacing HDD 
 
 ## Memory Hierarchy 
 
-| CPU (register > processor > cache) > main memory > HDD |
+| CPU (**register** > processor > SRAM a.k.a **caches**) > DRAM a.k.a **main memory** > **HDD** |
 | --------------------------------------------------- |
-| -------------------------------------------------------------------------> price↓ speed↓ size↑ |
+| -----------------------------> price↓ speed↓ size↑ |
 
 * Processor: gives 8bit(1byte) **address** to memory and the *memory* gives back **data** by the address to the processor
 
 ## Why Protection is needed
 
-now time sharing system => can invade other program's memory: interrupt -> terminate it
+now time-sharing system => can invade other program's memory: *interrupt* -> terminate it
 
 ## Booting Process
 
-: load OS to memory
+= loading OS to memory
 
-* ROM's command to CPU
-    1. POST: test
-    2. CPU copies **boot-strap-code** from 0 sector in HDD to *RAM*
-    3. CPU executes **boot-strap-code** by *kernal of RAM* which was copied from *kernal in HDD* by the process of OS 
+1. ROM's POST command to CPU
+2. CPU copies **boot-strap-code** from 0 sector in *HDD to RAM* to execute in the kernel of RAM
 
 # 2.3 computer performance improvement technology
 
-## Dual mode when CPU works
+## CPU execution mode: dual mode
 
 CPU <-> Program(user+OS)
 
-* mode_bit = 0: Kernel mode by kernel process (more authority)
-* mode_bit = 1: User mode by user process
+* mode_bit = 0: Kernel mode to execute a kernel process
+* mode_bit = 1: User mode to execute a user process
 
-## Hardware Mechanism
+## How to handle the sudden events by the devices when CPU busy
 
 ### Polling
 
-: in order(X) 
+* *CPU* keeps on *checking* I/O devices at regular interval whether it needs CPU service => in-order work
 
-* CPU steadily checks whether the device needs attention
-
-``` c
+``` c++
 void main(void){
+
     while(1){
-        if(button_pressed)
+        if(button_pressed) // by the SW (CPU)
             do_something();
     }
+
 }
-```
+
+``` 
 
 ### Interrupt
 
-: in order(O)  
+* *I/O device interrupts* the CPU and tell CPU that it need CPU service => give priorities
+* interrupt => CPU: user mode -> kernel mode
 
-* the device notices the CPU that it requires its attention. Interrupt can take place at any time.
-
-``` c
+``` c++
 Interrupt_Service_Routine(BUTTON_PRESS_vect){
     do_something();
 }
 
 void main(void){
-    setup_button_press_interrupt();
+    setup_button_press_interrupt(); // by the HW (IO device)
     while(1){
     }
 }
 ```
 
-* request 𝜇P to work instantly for the event 
-* user mode -> kernal mode
-
 #### Types
 
 * **S/W Interrupt** via Kernal of OS
-    - system call: the job when program1 requests OS to interrupt -> Program Count moves from program1 to ISR of OS
-    - exception: by checking [what mode](#Dual-mode-when-CPU-works) of CPU now via mode_bit
+    - *system call* is the job when *program1* requests OS to interrupt -> PC moves *from program1 to ISR* of OS
+    - *exception*: => check [what *mode*](#Dual-mode-when-CPU-works) of CPU now via mode_bit and *terminate* the program
 * [**H/W Interrupt**](#io-interrupt) via 𝜇C
-    - : the job when IO device requests OS to interrupt for program1 -> Program Count moves from the program1 to ISR
-* **Timer Interrupt**: Time Sharing System by setting timer via time slice(The period of time for which a process is allowed to run in a [preemptive](##scheduling-algorithms) multitasking system is generally called the *time slice or quantum*)
+    - is the job when *IO device* requests OS to interrupt for program1 -> PC moves *from the program1 to ISR*
+* **Timer Interrupt**: Time-Sharing System by setting timer via * *
 
 # 3.1 Introduction to Process
 
@@ -298,111 +293,101 @@ void main(void){
 | program         | process            |
 |-----------------|--------------------|
 | static state    | dynamic state      |
-| on HDD | on [memory](#memory) for execution |
+| on HDD | on [memory](#memory) |
 | before creating | before terminating |
 | process - PCB | program + PCB |
 
-1. A **program** on HDD got a **PCB** from OS space of memory  => A **process** on user space of memory
-2. The **process** returned the **PCB** => program
+1. A **program** on *HDD* got a **PCB** from OS space of memory  => A **process** on user space of *memory*
+2. The **process** returned the **PCB** => ** **
+* Process Control Block contains process-related info e.g. *pointer*(for queue)*, process state, PID*(unique), registers' value, memory limits, list of open files
 
-## Architecture 
+## 2 spaces of memory 
 
-### elements of memory 
-
-1. user space
-    - process A, process B 
-        - code: program code (RDONLY)
-        - data: global variables (RDWR)
-        - stack: local variables, pointer of program address  
-2. operating system space
+1. **user space**
+    - process A, process B ....
+        - **code**: program code *(RDONLY)*
+        - **data**: global variables *(RDWR)*
+        - **stack**: local variables, pointer of program address  
+2. **o**perating **s**ystem **space**
     - [PCB](#PCB) A, PCB B....
 
 # 3.2 Operation of Process
 
-## process hierarchy
-
-0. 'init process' when booting by OS
-1. **fork() system call**: starts child process which is a copy of the parent process
-    - copy all but not PID, Parent PID, Children PID
-    - pid = fork() -> pid = 0: child(o), -1: error
-2. program loads to the child process
+0. '*init* process' when *boot*ing by OS
+1. **fork() system call**: starts *child process* which is a copy of the parent process
+    - pid = fork(): copy all but not PID, Parent PID, Children PID
+    - => pid == 0: child(o) / pid == -1: error
+2. program *loads to the child process*
 3. **exec() system call**: replaces the current process image with new one
-4. if child exit(PID) -> parent collects its data
-    - data collection fail => **Zombie Process**
-    - no parent process => **Orphan Process**
+4. if *child exit*(PID) -> parent collects its data
+    - data collection *fail* => **Zombie Process**
+    - *no parent* process => **Orphan Process**
 
-# 3.3 States of a Process
+# 3.3 Five States of a Process
 
-[in](#queuing-diagram)
+### ready, running, blocked, suspended ready, suspended blocked
 
-1. new + PCB => **ready**: waiting in the ready queue <-> running: one process executed by CPU => -PCB => terminated
-2. **running**: during time slice
-* active (CPU)
-    - after time slice -> timeout(PID) => ready
-    - IO -> **blocked**(PID): connecting PCB by pointers -> wakeup(PID)  => ready
-* inactive (swap area)
-    - expelled, delayed -> swap io ->**suspended ready** -> wakeup -> **suspended blocked** -> swap io => ready
-3. terminated: code & data eliminated from memory and -PCB  
-    - normal - exit() / abnormal - core dump
+| process state | [scheduler](#queuing-diagram) | 
+|----|---|
+| 1. new: program + PCB => Process and PCB created | 1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process in the Ready Queue |
+| 2. **ready**: waiting in the ready queue | 2. Ready queue -> (short-term scheduler: select one PCB and let dispatcher to assign CPU(processor) to it) -> Processor |
+| 3. **running**: during time-slice | 3. Processor -> blocked, interrupted, paused | 
+|active (CPU)<br/>- after time-slice -> *timeout(PID)* => "ready"<br/>- IO request -> **blocked**(PID): waiting in the IO device queue -> IO complete -> interrupt -> wakeup(PID) -> "ready"<br/>|-(short-term scheduler) time-out for assignment<br/>-(short-term scheduler) IO request -> IO Device Queue: blocked and waiting -> IO Device<br/>-(short-term scheduler) interrupt|
+|inactive (swap area)<br/>- "ready", "blocked" -> (expelled, delayed, long cycle) -> swap out -> **suspended blocked** -> (wakeup) -> **suspended blocked** -> swap in => "ready", "blocked" |-(mid-term scheduler) swap out -> paused process -> swap in|
+|4. terminated: code & data eliminated from *memory and -PCB*<br/>- normal - *exit()* during "running", after completing jobs<br/>- abnormal - core dump||
 
-# 3.4 Process Control Block & Context switching
+# 3.4 Context switching
 
-## PCB
+## Process Context
 
-* OS relevant: PID, pointer, process state
-* CPU relevant: Program Counter, registers
-* resource relevant:  memory limits, list of open files
+= info about current process state
+
+* HW context: PC, registers
+* memory context: process code, process data, process stack
+* kernel context:  kernel stack, kernel data(∋PCB)
 
 ## Context switching
 
-re-scheduling
-
-### why
-
-time-sharing system
-
-### when
-
-io/timer interrupt -> ISR or context switching
-
-### process context
-
-: HW / memory / kernel context 
-
-### how to switch
-
-p2 ready, p1 running -> timeout -> store p1 state in PCB 1 -> get p2 state from PCB2 -> dispatch p2 -> p2 running, p1 ready 
-
-### disadvs
-
-overhead => [multi-thread](#Multi-Thread) to overhead ↓
+* = re-scheduling
+* why? time-sharing system
+* when? io/timer interrupt -> ISR or context switching
+* how? store the current process context in its PCB and get the next process context from its PCB
+* ex? p2 ready, p1 running -> timeout -> store p1 state in PCB 1 -> get p2 state from PCB2 -> dispatch p2 -> p2 running, p1 ready 
+* disadvs? overhead => [multi-thread](#Multi-Thread) to overhead ↓
 
 # 3.5 Thread
 
 ## What is Thread
 
-* Lightweight Process: unit of CPU
-    - a process > [multiple threads](#Multi-Thread)
-* Hyper Thread: a set of 2 registers
-    - when context switching, overhead ↓
+* Thread = a basic unit of CPU
+* subsets of a process: a process > [multiple threads](#Multi-Thread)
+* Hyper Thread = a set of 2 registers 
+    - why? when context switching, overhead ↓
 
-## Concurrency 
+## What Thread has
 
-* *one by one process(share)*: address space(*Data, Code* area), resource(*OS*) in one process
-    - the address space of a Process = **stack**(one each) + *data(share) + code(share)*
-* **one by one thread**: Stack, Program Counter, Registers
-    - Process Control Block = **Program Counter + Registers** > Thread Control Block = thread ID + Program Counter + Stack Pointer
+(A process has 1 address space - code+data+stack)
 
-## Multi-Thread
+* Multiple processes *share Code address space, Data address space, OS resources* for one process
+* Each process has its own **Stack* address space, PC, Register set**.
+    - TCB = thread ID + thread PC(->move in the Code address space) + thread SP(pointing the Stack address space)
 
-* multi-task: multiple processes(single-thread) by fork() -> copied => waste
+## Thread States
+
+* new -> **ready** -> dispatch -> **running** -> terminated
+    1. running -> timeout -> ready
+    2. running -> **blocked** -> ready
+
+## Single-Thread VS Multi-Thread
+
+* single-thread = **multi-task**: multiple processes by fork() -> copied => waste
     - ex. chrome
     - +) security, independency of each webpages
-* multi-thread: multiple threads in a process -> shared => no waste
+* **multi-thread**: multiple threads in a process -> shared => no waste
     - ex. explorer
     - +) time, resource, efficiency
 
-<img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300" style="float:left"/>
+<img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300"/>
 
 <Br/>
 
@@ -434,10 +419,12 @@ how to express process-scheduling
 1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process in the Ready Queue
 2. Ready queue -> (short-term scheduler: select one PCB) -> (dispatcher: assign) -> Processor
 3. Processor -> blocked, interrupted, paused
+
     1. (short-term scheduler) IO request -> IO Device Queue: blocked and waiting -> IO Device
     2. (short-term scheduler) time-out for assignment
     3. (short-term scheduler) interrupt
     4. (mid-term scheduler) swap out -> paused process -> swap in
+
 4. -> Ready Queue
 
 <hr/>
