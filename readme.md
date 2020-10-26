@@ -327,9 +327,7 @@ void main(void){
 
 ### ready, running, blocked, suspended ready, suspended blocked
 
-* long-term scheduler = job scheduler: takes process from new
-* mid-term scheduler=the degree of multiprogramming↓ : takes process from running
-* short-term scheduler = CPU scheduler: takes the process from ready
+<img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
 
 # 3.4 Context switching
 
@@ -414,6 +412,12 @@ how to execute a process
 => to save time: priority of IO bound job ↑ 
 
 ## CPU Schedulers
+
+* long-term scheduler = job scheduler: takes process from new
+* mid-term scheduler=the degree of multiprogramming↓ : takes process from running
+* short-term scheduler = CPU scheduler: takes the process from ready
+
+<img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
 
 ### Queuing diagram
 
