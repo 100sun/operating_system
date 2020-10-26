@@ -327,14 +327,9 @@ void main(void){
 
 ### ready, running, blocked, suspended ready, suspended blocked
 
-| process state | [scheduler](#queuing-diagram) | 
-|----|---|
-| 1. new: program + PCB => Process and PCB created | 1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process in the Ready Queue |
-| 2. **ready**: waiting in the ready queue | 2. Ready queue -> (short-term scheduler: select one PCB and let dispatcher to assign CPU(processor) to it) -> Processor |
-| 3. **running**: during time-slice | 3. Processor -> blocked, interrupted, paused | 
-|active (CPU)<br/>- after time-slice -> *timeout(PID)* => "ready"<br/>- IO request -> **blocked**(PID): waiting in the IO device queue -> IO complete -> interrupt -> wakeup(PID) -> "ready"<br/>|-(short-term scheduler) time-out for assignment<br/>-(short-term scheduler) IO request -> IO Device Queue: blocked and waiting -> IO Device<br/>-(short-term scheduler) interrupt|
-|inactive (swap area)<br/>- "ready", "blocked" -> (expelled, delayed, long cycle) -> swap out -> **suspended blocked** -> (wakeup) -> **suspended blocked** -> swap in => "ready", "blocked" |-(mid-term scheduler) swap out -> paused process -> swap in|
-|4. terminated: code & data eliminated from *memory and -PCB*<br/>- normal - *exit()* during "running", after completing jobs<br/>- abnormal - core dump||
+* long-term scheduler = job scheduler: takes process from new
+* mid-term scheduler=the degree of multiprogramming↓ : takes process from running
+* short-term scheduler = CPU scheduler: takes the process from ready
 
 # 3.4 Context switching
 
@@ -387,7 +382,7 @@ void main(void){
     - ex. explorer
     - +) time, resource, efficiency
 
-<img src="https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter4/4_01_ThreadDiagram.jpg" height = "300"/>
+<img src="https://github.com/100sun/operating_system/blob/master/multi-thread.JPG" height = "300"/>
 
 <Br/>
 
@@ -395,41 +390,32 @@ void main(void){
 
 ## What is scheduling
 
-the method that allows **when and what process cpu resource can be assigned** by order of ready queue of *PCB* for more efficiency between the processes whose most jobs are using *CPU VS IO*
+the method that allows **when and what process cpu resource can be assigned** by order of ready queue of *PCB* for more efficiency between the processes whose most jobs are using *CPU VS I/O*
 
-## CPU-I/O Burst Cycle
+## CPU - I/O Burst Cycle
 
 how to execute a process
 
-1. **CPU Burst**: when the process is being *executed in the CPU*
-    1. Long CPU burst : **CPU bound job** ex. simulation program (complicated)
-        * duration ↑ => frequency ↓
-    2. Short CPU burst : **I/O bound job** ex. docx program (keyboard)
-        * duration ↓ => frequency ↑
-        * => *priority* of process ↑ 
-2. **I/O Burst**: when the *CPU is waiting* for I/O for further execution
+### burst
+
+1. **CPU Burst**: when the process is being *executed* in the CPU
+2. **I/O Burst**: when the CPU is *waiting* for I/O for further execution
 3. ready queue: the process goes into the ready queue for the next CPU burst
+
+### bound job
+
+* **CPU bound job** ex. simulation program (complicated)
+    - duration ↑ => frequency ↓
+    - *Long CPU burst <-> Short IO burst*
+* **IO bound job** ex. docx program (keyboard)
+    - duration ↓ => frequency ↑
+    - *short CPU burst <-> long IO burst*
+
+=> to save time: priority of IO bound job ↑ 
 
 ## CPU Schedulers
 
 ### Queuing diagram
-
-how to express process-scheduling
-
-1. Programs on HDD/SDD -> (long-term scheduler: order process) -> A process in the Ready Queue
-2. Ready queue -> (short-term scheduler: select one PCB) -> (dispatcher: assign) -> Processor
-3. Processor -> blocked, interrupted, paused
-
-    1. (short-term scheduler) IO request -> IO Device Queue: blocked and waiting -> IO Device
-    2. (short-term scheduler) time-out for assignment
-    3. (short-term scheduler) interrupt
-    4. (mid-term scheduler) swap out -> paused process -> swap in
-
-4. -> Ready Queue
-
-<hr/>
-
-5. done
 
 # 4.2 Considerations for Scheduling
 
