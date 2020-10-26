@@ -1,5 +1,12 @@
 # Contents
 ### Chp 1 Introduction to OS
+* [Contents](#contents)
+		* [Chp 1 Introduction to OS](#chp-1-introduction-to-os)
+		* [Chp 2 Computer Architecture](#chp-2-computer-architecture)
+		* [Chp 3 Process and Thread](#chp-3-process-and-thread)
+		* [Chp 4 CPU Scheduling](#chp-4-cpu-scheduling)
+		* [Chp 5 Process Synchronization](#chp-5-process-synchronization)
+### Chp 1 Introduction to OS
 * [1.1 Introduction to OS](#11-introduction-to-os)
 	* [Computer](#computer)
 	* [System Hierarchy](#system-hierarchy)
@@ -7,8 +14,8 @@
 		* [kernel](#kernel)
 	* [role of OS](#role-of-os)
 * [1.2 History of OS](#12-history-of-os)
-	* [1940s: no OS - vacuum tubes](#1940s-no-os---vacuum-tubes)
-	* [early 1950s: no os - operator](#early-1950s-no-os---operator)
+	* [1940s: no OS](#1940s-no-os)
+	* [early 1950s: no OS](#early-1950s-no-os)
 	* [1950s: batch processing system](#1950s-batch-processing-system)
 	* [early 1960s: interactive system](#early-1960s-interactive-system)
 	* [mid 1960s: multiprogramming system](#mid-1960s-multiprogramming-system)
@@ -19,7 +26,7 @@
 ### Chp 2 Computer Architecture
 * [2.1 basic configuration](#21-basic-configuration)
 	* [international units](#international-units)
-	* [how digital H/W system works: by **clocking**](#how-digital-hw-system-works-by-clocking)
+	* [how digital H/W system works: by clocking](#how-digital-hw-system-works-by-clocking)
 * [2.2.1 CPU](#221-cpu)
 	* [how to execute a source file](#how-to-execute-a-source-file)
 	* [Instruction Cycle](#instruction-cycle)
