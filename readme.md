@@ -1,11 +1,12 @@
-# contents
+# Contents
 
 ### Chp 1 Introduction to OS
 
-* [contents](#contents)
 * [1.1 Introduction to OS](#11-introduction-to-os)
   + [Computer](#computer)
   + [System Hierarchy](#system-hierarchy)
+    - [Shell](#shell)
+    - [kernel](#kernel)
   + [role of OS](#role-of-os)
 * [1.2 History of OS](#12-history-of-os)
   + [1940s: no OS - vacuum tubes](#1940s-no-os---vacuum-tubes)
@@ -18,7 +19,7 @@
   + [1990s-now: client/server system](#1990s-now-clientserver-system)
   + [early 2000s-now: P2P system](#early-2000s-now-p2p-system)
 
-### Chp 2 Computer Architecture 
+### Chp 2 Computer Architecture
 
 * [2.1 basic configuration](#21-basic-configuration)
   + [international units](#international-units)
@@ -33,7 +34,10 @@
   + [Booting Process](#booting-process)
 * [2.3 computer performance improvement technology](#23-computer-performance-improvement-technology)
   + [CPU execution mode: dual mode](#cpu-execution-mode-dual-mode)
-  + [How to handle the sudden events by the devices when CPU busy](#how-to-handle-the-sudden-events-by-the-devices-when-cpu-busy)
+    - [CPU-I/O Burst Cycle](#cpu-io-burst-cycle)
+  + [How to handle the sudden events by I/O](#how-to-handle-the-sudden-events-by-io)
+    - [Polling](#polling)
+    - [Interrupt](#interrupt)
 
 ### Chp 3 Process and Thread
 
@@ -42,31 +46,33 @@
   + [2 spaces of memory](#2-spaces-of-memory)
 * [3.2 Operation of Process](#32-operation-of-process)
 * [3.3 Five States of a Process](#33-five-states-of-a-process)
+    - [ready, running, blocked, suspended ready, suspended blocked](#ready-running-blocked-suspended-ready-suspended-blocked)
 * [3.4 Context switching](#34-context-switching)
   + [Process Context](#process-context)
   + [Context switching](#context-switching)
 * [3.5 Thread](#35-thread)
   + [What is Thread](#what-is-thread)
-  + [What Thread has](#what-thread-has)
+  + [What a Thread has](#what-a-thread-has)
   + [Thread States](#thread-states)
   + [Single-Thread VS Multi-Thread](#single-thread-vs-multi-thread)
 
-### Chp 4 CPU Scheduling 
+### Chp 4 CPU Scheduling
 
 * [4.1 Introduction to Scheduling](#41-introduction-to-scheduling)
   + [What is scheduling](#what-is-scheduling)
-  + [CPU - I/O Burst Cycle](#cpu---io-burst-cycle)
   + [CPU Schedulers](#cpu-schedulers)
+* [4.2. Considerations for Scheduling](#42-considerations-for-scheduling)
+  + [Criteria](#criteria)
+    - [time criteria](#time-criteria)
   + [Process Priority](#process-priority)
-* [4.3 Multilevel Queue](#43-multilevel-queue)
-  + [Multilevel Queue](#multilevel-queue)
-* [4.4 Scheduling Algorithm](#44-scheduling-algorithm)
-  + [The Criteria for Scheduling](#the-criteria-for-scheduling)
-  + [time criteria](#time-criteria)
-  + [Scheduling Algorithms](#scheduling-algorithms)
-  + [Multilevel Queue Scheduling](#multilevel-queue-scheduling)
-  + [Multilevel Feedback Queue Scheduling](#multilevel-feedback-queue-scheduling)
-  + [Algorithm Evaluation](#algorithm-evaluation)
+* [4.3. Scheduling Algorithm](#43-scheduling-algorithm)
+  + [types](#types)
+    - [preempt?](#preempt?)
+    - [give priority?](#give-priority?)
+  + [examples](#examples)
+  + [Scheduling Algorithm Evaluation](#scheduling-algorithm-evaluation)
+    - [Average Waiting Time](#average-waiting-time)
+    - [Average Turn-around Time](#average-turn-around-time)
 
 ### Chp 5 Process Synchronization
 
@@ -75,14 +81,26 @@
 * [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
   + [conditions](#conditions)
   + [solution](#solution)
-
-### Chp 6 Deadlock
-
+    - [1. **test-and-set code** at the same time supported by HW](#1-test-and-set-code-at-the-same-time-supported-by-hw)
+    - [2. **Peterson** Algorithm](#2-peterson-algorithm)
+    - [3. **Dekker** Algorithm](#3-dekker-algorithm)
+    - [4. **Semaphore** Tool](#4-semaphore-tool)
+    - [5. **Monitor**](#5-monitor)
+    - [ex. producer-consumer problem](#ex-producer-consumer-problem)
 * [6.1 Introduction to Deadlock](#61-introduction-to-deadlock)
   + [what is?](#what-is?)
   + [how to express?](#how-to-express?)
   + [when?](#when?)
+    - [conditions](#conditions)
   + [how to resolve?](#how-to-resolve?)
+    - [1. deadlock prevention](#1-deadlock-prevention)
+    - [2. deadlock avoidance](#2-deadlock-avoidance)
+    - [3. deadlock detection & recovery](#3-deadlock-detection-&-recovery)
+    - [4. deadlock ignorance](#4-deadlock-ignorance)
+
+<hr/>
+
+##### Chp 1 Introduction to OS
 
 # 1.1 Introduction to OS
 
@@ -164,6 +182,8 @@
 ## 1990s-now: client/server system
 
 ## early 2000s-now: P2P system
+
+##### Chp 2 Computer Architecture 
 
 # 2.1 basic configuration
 
@@ -323,6 +343,8 @@ via 𝜇C
 
 Time-Sharing System by setting timer via * *
 
+##### Chp 3 Process and Thread
+
 # 3.1 Introduction to Process
 
 ## program vs process
@@ -419,6 +441,8 @@ Time-Sharing System by setting timer via * *
 
 <img src="https://github.com/100sun/operating_system/blob/master/multi-thread.JPG" height = "300"/>
 
+##### Chp 4 CPU Scheduling 
+
 # 4.1 Introduction to Scheduling
 
 ## What is scheduling
@@ -456,7 +480,61 @@ waiting time ⊂ response time ⊂ turn-around time
 * interactive > batch process
 * IO bound job > CPI bound job
 
-## Algorithm Evaluation
+# 4.3. Scheduling Algorithm
+
+## types
+
+### preempt?
+
+| | Non-Preemptive Scheduling | Preemptive Scheduling |
+| ---- | --------- | -------- |
+| when can start a new process | can't until *termination* of the process or I/O | when suspended by *OS or interrupted* |
+| disadvs | throughput ↓ <Br/>(even IO bound job has to wait for a long time) | response time ↑ |
+| e.g. algorithm | FCFS, SJF, HRN | SRT, RR, MLQ, MLFQ |
+
+### give priority?
+
+||Static Priority|Dynamic Priority|
+|----|----|----|
+|priority|processes are permanently assigned to a queue|allows a process to move between queues|
+|level of implementation|↓|↑|
+|efficiency|↓|↑|
+| e.g. algorithm |MLQ, FCFS|MLQF, SJF, HRN, SRT |
+
+#### MLQ
+
+Multilevel Queue: How To Assign Priority of Process
+
+1. **ready** queue
+    1. enqueue process to the back in its priority queue 
+    2. CPU scheduler: dispatch the front process in priority 0 queue to the CPU
+2. **waiting** queue (blocked by IO request)
+    - make *multiple* processes be ready *by checking IV*
+
++) automatically separate IO bound job and CPU bound job
+
+## examples
+
+||FCFS|SJF|HRN|SRT|RR|MSQ|MSFQ|
+|---|---|---|---|---|---|---|---|
+|alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|Round Robin|Multilevel Queue Scheduling|Multilevel Feedback Queue Scheduling|
+|preempt?|non-preemptive|||preemptive<br/>(SJF+preemptive)||||
+|prior?|static priority|dynamic priority|||**X**|**static priority**|**dynamic priority**|
+|which process first?|**waiting_time↓**|**burst_time↓**|**waiting_time/CPU_burst_length↑**|**remained_burst_time↓**<br/>(SJF+preemptive)|just in order of the ready queue|priority assigned by OS↑|CPU burst length↓|
+|advs||convoy effect⇓|starvation⇓||response time⇓|overhead⇓|high flexibility|
+|disadvs|efficiency⇓<Br/>∵convoy effect(AWT⇑)|starvation|flexibility⇓|≈ SJF|- time slice⇑ ≈ FCFS<br/>- time slice⇓: context switching⇑<br/>=>time slice↓|flexibility⇓|hard to build and implement|
+
+* starvation: when we have a process having high-priority and long burst time, this leads indefinitely waiting for the process having low-priority
+    - solution to Starvation: aging = time ∝ priority
+* aging: a technique of gradually increasing the priority of processes that wait in the system for a long time.
+    - HRN: considering waiting time as well
+    - MLFQ: so that we can separate processes with different CPU-burst characteristics.
+        1. If a process uses too much CPU time, it will be moved to a lower-priority queue. 
+        2. If a process waits too long in a lower-priority queue, it may be moved to a higher-priority queue.
+        * **priority↓ time slices⇑** possibility to burst CPU⇓ CPU burst length⇑ 
+        * ex. *IO burst job*: TS⇓* -> CPU burst job*: TS⇑.. *->* ***FCFS***: TS=∞
+
+## Scheduling Algorithm Evaluation
 
 w/ Gantt Chart
 
@@ -470,74 +548,7 @@ w/ Gantt Chart
 * Turnaround time is the sum of the periods spent waiting to get into memory, waiting in the ready queue, executing on the CPU, and doing I/O. / num of processes
 * turn-around time - arrival time
 
-# 4.3. Scheduling Algorithm
-
-| | Preemptive Scheduling | Non-Preemptive Scheduling |
-| ---- | --------- | -------- |
-| when can start a new process | suspended by *OS or interrupted* | unless *termination* of the process or I/O |
-| disadvs | response time ↑ | throughput ↓ <Br/>(even IO bound job has to wait for a long time) |
-| [Scheduling Algorithm](#scheduling-algorithm) e.g. | SRT, RR, MLQ, MLFQ | FCFS, SJF, HRN |
-
-## Priority Scheduling
-
-||Static Priority|Dynamic Priority|
-|----|----|----|
-|priority|[cannot be changed](#Multilevel-Queue-Scheduling)|[can be changed by time-interval](#Multilevel-Feedback-Scheduling)|
-|level of implementation|↓|↑|
-|efficiency|↓|↑|
-
-### FCFS, SJF, HRN, SRT
-
-||FCFS|SJF|HRN|SRT|
-|---|---|---|---|---|
-|alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|
-|type|non-preemptive|non-preemptive|non-preemptive|preemptive(time slice O)|
-|type|static priority|dynamic priority|dynamic priority|dynamic priority|dynamic priority|
-|priority↑|waiting_time↓|burst_time↓|waiting_time/CPU_burst_length↑|remained_burst_time↓|
-|disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still|
-
-### Multilevel Queue Scheduling
-
-static priority
-
-#### Multilevel Queue
-
-MLQ: How To Assign Priority of Process
-
-1. **ready** queue
-    1. enqueue process to the back in its priority queue 
-    2. CPU scheduler: dispatch the front process in priority 0 queue to the CPU
-2. **waiting** queue (blocked by IO request)
-    - make *multiple* processes be ready *by checking IV*
-
-### Multilevel Feedback Queue Scheduling
-
-by dynamic priority
-
-* each ready-queue: **priority↓ time slices⇑** the rate to burst CPU↓ CPU burst length⇑ 
-* ex: *IO burst job*: TS⇓* -> CPU burst job*: TS⇑.. *->* ***FCFS***: TS=∞(∵ it has been moved lots.. 😞)
-* *aging*: a process that waits too long in a lower-priority queue may be moved to a higher-priority queue.
-* hard to build and implement
-
-## disadvs of Priority Scheduling
-
-* starvation(∵convoy effect) => can be resolved by **again**
-* overhead(∵context-switching)
-
-* [aging](#Multilevel-Feedback-Queue-Scheduling), considering waiting time as well(SRT)
-
-## Round Robin Scheduling
-
-RR: just in order of the ready queue
-
-#### advs of RR
-
-response time ⇓
-
-#### disadvs of RR
-
-* time slice⇑ ≈ FCFS: AWT⇑ -> starvation
-* time slice⇓ ≈ SRT: context switching -> low efficiency
+##### Chp 5 Process Synchronization
 
 # 5.2 Shared Resource and Critical Section
 
