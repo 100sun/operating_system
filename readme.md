@@ -6,13 +6,11 @@
 
 * [Contents](#contents)
     - [Chp 1 Introduction to OS](#chp-1-introduction-to-os)
+    - [Chp 1 Introduction to OS](#chp-1-introduction-to-os)
     - [Chp 2 Computer Architecture](#chp-2-computer-architecture)
     - [Chp 3 Process and Thread](#chp-3-process-and-thread)
     - [Chp 4 CPU Scheduling](#chp-4-cpu-scheduling)
     - [Chp 5 Process Synchronization](#chp-5-process-synchronization)
-
-### Chp 1 Introduction to OS
-
 * [1.1 Introduction to OS](#11-introduction-to-os)
   + [Computer](#computer)
   + [System Hierarchy](#system-hierarchy)
@@ -54,7 +52,7 @@
 
 * [3.1 Introduction to Process](#31-introduction-to-process)
   + [program vs process](#program-vs-process)
-  + [2 spaces of memory](#2-spaces-of-memory)
+  + [two spaces of memory](#two-spaces-of-memory)
 * [3.2 Operation of Process](#32-operation-of-process)
 * [3.3 Five States of a Process](#33-five-states-of-a-process)
     - [ready, running, blocked, suspended ready, suspended blocked](#ready-running-blocked-suspended-ready-suspended-blocked)
@@ -62,8 +60,8 @@
   + [Process Context](#process-context)
   + [Context switching](#context-switching)
 * [3.5 Thread](#35-thread)
-  + [What is Thread](#what-is-thread)
-  + [What a Thread has](#what-a-thread-has)
+  + [What Thread is](#what-thread-is)
+  + [WhatThread has](#whatthread-has)
   + [Thread States](#thread-states)
   + [Single-Thread VS Multi-Thread](#single-thread-vs-multi-thread)
 
@@ -80,7 +78,7 @@
   + [types](#types)
     - [preempt?](#preempt?)
     - [give priority?](#give-priority?)
-  + [examples](#examples)
+  + [FCFS, SJF, HRN, RR, MSQ, MSFQ](#fcfs-sjf-hrn-rr-msq-msfq)
   + [Scheduling Algorithm Evaluation](#scheduling-algorithm-evaluation)
     - [Average Waiting Time](#average-waiting-time)
     - [Average Turn-around Time](#average-turn-around-time)
@@ -88,130 +86,31 @@
 ### Chp 5 Process Synchronization
 
 * [5.2 Shared Resource and Critical Section](#52-shared-resource-and-critical-section)
-  + [concurrency problem](#concurrency-problem)
+    - [Concurrency Problem](#concurrency-problem)
+    - [critical section](#critical-section)
 * [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
-  + [conditions](#conditions)
-  + [solution](#solution)
-    - [1. **test-and-set code** at the same time supported by HW](#1-test-and-set-code-at-the-same-time-supported-by-hw)
+  + [conditions to resolve critical section problem](#conditions-to-resolve-critical-section-problem)
+  + [solutions to resolve critical section problem](#solutions-to-resolve-critical-section-problem)
+    - [1. HW support](#1-hw-support)
     - [2. **Peterson** Algorithm](#2-peterson-algorithm)
     - [3. **Dekker** Algorithm](#3-dekker-algorithm)
     - [4. **Semaphore** Tool](#4-semaphore-tool)
     - [5. **Monitor**](#5-monitor)
     - [ex. producer-consumer problem](#ex-producer-consumer-problem)
-* [6.1 Introduction to Deadlock](#61-introduction-to-deadlock)
-  + [what is?](#what-is?)
-  + [how to express?](#how-to-express?)
-  + [when?](#when?)
-    - [conditions](#conditions)
-  + [how to resolve?](#how-to-resolve?)
-    - [1. deadlock prevention](#1-deadlock-prevention)
-    - [2. deadlock avoidance](#2-deadlock-avoidance)
-    - [3. deadlock detection & recovery](#3-deadlock-detection-&-recovery)
-    - [4. deadlock ignorance](#4-deadlock-ignorance)
+
+### Chp 6 Deadlock
+
+* [what is Deadlock?](#what-is-deadlock?)
+* [how to express Deadlock?](#how-to-express-deadlock?)
+* [when Deadlock happen?](#when-deadlock-happen?)
+* [how to resolve Deadlock? - before](#how-to-resolve-deadlock?---before)
+  + [1. deadlock prevention](#1-deadlock-prevention)
+  + [2. deadlock avoidance](#2-deadlock-avoidance)
+* [how to resolve Deadlock? - after](#how-to-resolve-deadlock?---after)
+  + [3. deadlock detection & recovery](#3-deadlock-detection-&-recovery)
+  + [4. deadlock ignorance](#4-deadlock-ignorance)
 
 <hr/>
-
-### Chp 1 Introduction to OS
-
-* [1.1 Introduction to OS](#11-introduction-to-os)
-  + [Computer](#computer)
-  + [System Hierarchy](#system-hierarchy)
-    - [Shell](#shell)
-    - [kernel](#kernel)
-  + [role of OS](#role-of-os)
-* [1.2 History of OS](#12-history-of-os)
-  + [1940s: no OS - vacuum tubes](#1940s-no-os---vacuum-tubes)
-  + [early 1950s: no os - operator](#early-1950s-no-os---operator)
-  + [1950s: batch processing system](#1950s-batch-processing-system)
-  + [early 1960s: interactive system](#early-1960s-interactive-system)
-  + [mid 1960s: multiprogramming system](#mid-1960s-multiprogramming-system)
-  + [late 1960s: time sharing system](#late-1960s-time-sharing-system)
-  + [late 1970s: distributed system](#late-1970s-distributed-system)
-  + [1990s-now: client/server system](#1990s-now-clientserver-system)
-  + [early 2000s-now: P2P system](#early-2000s-now-p2p-system)
-
-### Chp 2 Computer Architecture
-
-* [2.1 basic configuration](#21-basic-configuration)
-  + [international units](#international-units)
-  + [how digital H/W system works: by **clocking**](#how-digital-hw-system-works-by-clocking)
-* [2.2.1 CPU](#221-cpu)
-  + [how to execute a source file](#how-to-execute-a-source-file)
-  + [Instruction Cycle](#instruction-cycle)
-* [2.2.1 Memory](#221-memory)
-  + [Memory Types](#memory-types)
-  + [Memory Hierarchy](#memory-hierarchy)
-  + [Why Protection is needed](#why-protection-is-needed)
-  + [Booting Process](#booting-process)
-* [2.3 computer performance improvement technology](#23-computer-performance-improvement-technology)
-  + [CPU execution mode: dual mode](#cpu-execution-mode-dual-mode)
-    - [CPU-I/O Burst Cycle](#cpu-io-burst-cycle)
-  + [How to handle the sudden events by I/O](#how-to-handle-the-sudden-events-by-io)
-    - [Polling](#polling)
-    - [Interrupt](#interrupt)
-
-### Chp 3 Process and Thread
-
-* [3.1 Introduction to Process](#31-introduction-to-process)
-  + [program vs process](#program-vs-process)
-  + [2 spaces of memory](#2-spaces-of-memory)
-* [3.2 Operation of Process](#32-operation-of-process)
-* [3.3 Five States of a Process](#33-five-states-of-a-process)
-    - [ready, running, blocked, suspended ready, suspended blocked](#ready-running-blocked-suspended-ready-suspended-blocked)
-* [3.4 Context switching](#34-context-switching)
-  + [Process Context](#process-context)
-  + [Context switching](#context-switching)
-* [3.5 Thread](#35-thread)
-  + [What is Thread](#what-is-thread)
-  + [What a Thread has](#what-a-thread-has)
-  + [Thread States](#thread-states)
-  + [Single-Thread VS Multi-Thread](#single-thread-vs-multi-thread)
-
-### Chp 4 CPU Scheduling
-
-* [4.1 Introduction to Scheduling](#41-introduction-to-scheduling)
-  + [What is scheduling](#what-is-scheduling)
-  + [CPU Schedulers](#cpu-schedulers)
-* [4.2. Considerations for Scheduling](#42-considerations-for-scheduling)
-  + [Criteria](#criteria)
-    - [time criteria](#time-criteria)
-  + [Process Priority](#process-priority)
-* [4.3. Scheduling Algorithm](#43-scheduling-algorithm)
-  + [types](#types)
-    - [preempt?](#preempt?)
-    - [give priority?](#give-priority?)
-  + [examples](#examples)
-  + [Scheduling Algorithm Evaluation](#scheduling-algorithm-evaluation)
-    - [Average Waiting Time](#average-waiting-time)
-    - [Average Turn-around Time](#average-turn-around-time)
-
-### Chp 5 Process Synchronization
-
-* [5.2 Shared Resource and Critical Section](#52-shared-resource-and-critical-section)
-  + [concurrency problem](#concurrency-problem)
-* [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
-  + [conditions](#conditions)
-  + [solution](#solution)
-    - [1. **test-and-set code** at the same time supported by HW](#1-test-and-set-code-at-the-same-time-supported-by-hw)
-    - [2. **Peterson** Algorithm](#2-peterson-algorithm)
-    - [3. **Dekker** Algorithm](#3-dekker-algorithm)
-    - [4. **Semaphore** Tool](#4-semaphore-tool)
-    - [5. **Monitor**](#5-monitor)
-    - [ex. producer-consumer problem](#ex-producer-consumer-problem)
-* [6.1 Introduction to Deadlock](#61-introduction-to-deadlock)
-  + [what is?](#what-is?)
-  + [how to express?](#how-to-express?)
-  + [when?](#when?)
-    - [conditions](#conditions)
-  + [how to resolve?](#how-to-resolve?)
-    - [1. deadlock prevention](#1-deadlock-prevention)
-    - [2. deadlock avoidance](#2-deadlock-avoidance)
-    - [3. deadlock detection & recovery](#3-deadlock-detection-&-recovery)
-    - [4. deadlock ignorance](#4-deadlock-ignorance)
-
-<hr/>
-
-##### Chp 1 Introduction to OS
 
 # 1.1 Introduction to OS
 
@@ -471,7 +370,7 @@ Time-Sharing System by setting timer via * *
 2. The **process** returned the **PCB** => ** **
 * Process Control Block contains process-related info e.g. *pointer*(for queue)*, process state, PID*(unique), registers' value, memory limits, list of open files
 
-## 2 spaces of memory 
+## two spaces of memory 
 
 1. **user space**
     - process A, process B ....
@@ -520,14 +419,14 @@ Time-Sharing System by setting timer via * *
 
 # 3.5 Thread
 
-## What is Thread
+## What Thread is
 
 * Thread = a basic unit of CPU
 * subsets of a process: a process > [multiple threads](#Multi-Thread)
 * Hyper Thread = a set of 2 registers 
     - why? when context switching, overhead ↓
 
-## What a Thread has
+## WhatThread has
 
 (A process has 1 address space - code+data+stack)
 
@@ -624,7 +523,7 @@ Multilevel Queue: How To Assign Priority of Process
 
 +) automatically separate IO bound job and CPU bound job
 
-## examples
+## FCFS, SJF, HRN, RR, MSQ, MSFQ
 
 ||FCFS|SJF|HRN|SRT|RR|MSQ|MSFQ|
 |---|---|---|---|---|---|---|---|
@@ -651,41 +550,50 @@ w/ Gantt Chart
 
 ### Average Waiting Time
 
-* Waiting time is the sum of the periods spent waiting in the ready queue. / num of processes
-* start time - arrival time (- burst time)
+* Waiting time = ∑ the periods spent waiting in the ready queue
+* AWT = {start time - arrival time (- burst time)} / #. processes 
 
 ### Average Turn-around Time
 
-* Turnaround time is the sum of the periods spent waiting to get into memory, waiting in the ready queue, executing on the CPU, and doing I/O. / num of processes
-* turn-around time - arrival time
+* Turnaround time = ∑ the periods spent waiting to get into memory + waiting in the ready queue + executing on the CPU + doing I/O jobs
+* ATT = {turn-around time - arrival time} / #. processes 
 
 ##### Chp 5 Process Synchronization
 
 # 5.2 Shared Resource and Critical Section
 
-## concurrency problem
+### Concurrency Problem
 
-* A *race condition* is a situation when *cooperating threads*(<->independent threads) code that would access a *shared resource* could do so in such a way as to cause unexpected results.
-*  ex. producer-consumer problem: inconsistent num of resources, sharing hardware resources: printer
+* shared resource: variables, memory, files that N threads(processes) are sharing
+* cooperating threads(sharing) <-> independent threads(not sharing)
+* race condition: when cooperating threads access a shared resource
+* e.g. **producer-consumer problem**: inconsistent result num of resources by order of execution of code when race codintion
+* e.g. sharing hardware resources like printer
+* => cooperating threads need **synchronization**
+* how? using atomic operation: cannot stop operation ex. load/store/add...
+* then? **mutual exclusion** = only one process in **critical section** at a time
 
-=> they need **synchronization**
+### critical section
 
-* how? *atmoic operation*: cannot stop operation 
-* then? **mutual exclusion**(mutex): only one process in **critical section**
+* code section that only one thread can be executed (no multitasking)
+* code section which update the shared resources
 
 # 5.3 Critical Section Synchronization
 
-how to resolve synchronization
+## conditions to resolve critical section problem
 
-## conditions
+1. using *1 boolean* variable: denies **mutex**
+    - ∵ lock=true; lock=true;
+2. using *2 boolean* variables: leads **bounded waiting**(stuck forever)
+    - ∵ while(lock2=true); while(lock1=true);
+3. using *1 integer* variable: leads **progress flexibility**(if p2 stopped using critical section, p1 cannot access to the critical section)
+    - ∵ int lock1=1;
 
-1. using 1 boolean variable: cause **mutex**(multi processes in critical section)
-2. using 2 boolean variables: cause **bounded waiting**(stuck forever)
-3. using 1 integer variable: cause **progress flexibility**(if p2 stopped, p1 cannot go ahead)
+## solutions to resolve critical section problem
 
-## solution
+### 1. HW support
 
-### 1. **test-and-set code** at the same time supported by HW
+execution of test-and-set code at the same time 
 
 ``` cpp
 lock = true; while(lock == true)
@@ -693,8 +601,8 @@ lock = true; while(lock == true)
 
 ### 2. **Peterson** Algorithm
 
-* *using 2 variables - lock, *turn* 
-* BUT can cause busy-waiting
+* using 2 variables - lock, *turn* 
+* BUT limitation of 2 processes 
 
 ``` cpp
 while(lock1==true && turn==2)
@@ -702,10 +610,8 @@ while(lock1==true && turn==2)
 
 ### 3. **Dekker** Algorithm
 
-* *using 2 variables - lock, *turn* 
+* using 2 variables - lock, *turn* 
 * BUT can cause busy-waiting
-
-    
 
 ``` cpp
 while(lock2==true) {
@@ -720,38 +626,40 @@ while(lock2==true) {
 
 ### 4. **Semaphore** Tool
 
-: an integer variable S which indicate the number of resources(ticket) available in the system
-
-#### process access the shared resources
-
-* atmoic operations on S
-    - P(): disable interrupts -> acquire -> enable interrupts
-    - S(): disable interrupts -> release -> enable interrupts
-* BUT can cause deadlock 
+* using an *int S* which indicate how many resources(ticket) are available in the system
+* P, V atomic operations and only S can access to those func.
+* BUT can cause deadlock if 2 shared resources
 
 ``` cpp
-Semaphore() //initiate
+Semaphore(n){
+    S=n; // initiate S
+} 
 
-P(){ // wait()
-    block() // to the semaphore queue 
+// lock acquire (implemented by atomic operation)
+P(){ 
+    // disable interrupts
+    if(S>0) S--; // => "it is being used now" and can access to the section
+    block() // wait for the sync signal to access critical section in the Semaphore queue 
+    // enable interrupts
 }
+
 // critical section 
 
-V(){ // signal()
-    wake_up() // to the ready queue of OS
+// lock release(implemented by atomic operation)
+V(){ 
+    // disable interrupts
+    S++; // increase the num of ticket
+    wake_up() // send sync signal to the process waiting in the Semaphore queue
+    // enable interrupts
 }
 ```
 
 ### 5. **Monitor**
 
-: abstract data types
-
-1. shared data variables: only by the procedures
-2. procedures(only one procedure can be executed at a time))
-
-#### process access the shared variables in the monitor
-
-access it through the procedures.
+* = MUTEX abstract data types providing by program language ∋ procedures
+* only procedures in monitor can access each process.
+* only codes inside monitor can access shared resources.
+* only one procedure can be executed at a time in monitor.
 
 ### ex. producer-consumer problem
 
@@ -759,116 +667,115 @@ access it through the procedures.
 * con(): after full.signal
 
 ``` cpp
-pro(){
-    if(full){
-        full.signal();
-        full.wait() // suspended in block queue of that condition variable 
-        // empty.signal();
-        sum+=1; // executed and processing about the shared variable
+// other processes are waiting in the Monitor queue.
+monitor m{
+    // 1. declare shared variables
+    int sum;
+    condition full, empty;
+
+    // 2. declare procedures that can access to the critical section
+    pro(){ // producer process
+        if(full){
+            full.signal();
+            full.wait(); // => empty.signal();
+        } 
+        sum++;
     }
+    con(){ // consumer process
+        if(empty){
+            empty.signal();
+            empty.wait(); // => full.signal();
+        } 
+        sum--;
+    }
+
+    // 3. initiate code
+    initial(){}
 }
 ```
 
-# 6.1 Introduction to Deadlock
+##### Chp 6 Deadlock
 
-## what is?
+### what is Deadlock?
 
-* Deadlock(=Circular wait): by the relationship between more than 2 processes
-    - requested resources are blocked by the other processes
-* Starvation: by OS
-    - the requested resources are continuously used by high priority processes.
+|| Deadlock | Starvation |
+|--|--|--|
+|process|*All* processes keep *waiting* for each other. ∵ *Circular* wait|High priority processes keep executing and *low* priority processes are *blocked*|
+|resource|Resources are *blocked* by the *processes*|Resources are continuously *utilized* by high *priority* processes|
 
-## how to express?
+### how to express Deadlock?
 
-Resource-Allocation Graph
+* Resource-Allocation Graph
+    - **process** : ㅇ
+    - **resource** : ㅁ ∋ **instances** : •
+    - ㅇ **<---** ㅁ : allocation edges
+    - ㅇ **--->** ㅁ : request edges
+* resources: request -> use -> release 
 
-* **process**: circle
-* **resource**: square, *instances*: dots
-* process **<-** resource : allocation edges
-* process **->** resource : request edges
+## when Deadlock happen?
 
-=> resources: request -> use -> release
+* e.g Dining philosophers problem: at a round table
+* when all the four conditions occur.
 
-## when?
+1. **Mutex**: no sharing forks
+2. **No Preemption**: no taking away forks
+3. **Hold and Wait**: no monopolization of all forks
+4. **Circular wait**: no in-order linear table
 
-a situation where the several processes in CPU compete for the finite number of resources available within the CPU
-
-* shared variable: flag
-* Dining philosophers problem: at a round table
-
-### conditions
-
-There are four conditions which must occur *simultaneously* to *raise* the condition of *deadlock.*
-
-1. Mutual exclusion: sharing forks X
-    - *Only one process at a time* can use a resource if other process requests the same resource, it has to *wait* till the process using resource releases it.
-2. No Preemption: taking away forks X
-    - The process holding the resources can not be preempted. The process holding the resource *must release the resource* voluntarily when it has completed its task.
-3. Hold and Wait: monopolization of two forks X
-    - A process must be *holding* a resource and *waiting* to acquire another resource that is held by some other process.
-4. Circular wait: a linear table, in order O
-    - The process must wait for resources *in a circular* fashion.
-
-## how to resolve?
+## how to resolve Deadlock? - before
 
 ### 1. deadlock prevention
 
-(BEFORE) Deadlocks can be prevented by preventing at least one of the four required conditions:
-
-1. Mutex: unrealistic
-2. No Preemption: unrealistic
-3. Hold and Wait: processes holding resources must release them before requesting new resources, and then re-acquire them
-    - -) it is hard to *know* all the resources it has
-    - -) the *time* that it need that resource is changeable
-    - -) A process that requires *lots of resources <* A process that requires a few resources 
-    - -) *batch* system
-4. Circular wait: number all resources
-
-=> Even thought deadlock is not often, these ways restrict process
+* = Deadlocks can be prevented by preventing *at least one* of the four required conditions:
+1. **Mutex**: unrealistic
+2. **No Preemption**: unrealistic
+3. **Hold and Wait**: processes holding resources must *release* them, and then *re-acquire* them+new.
+    - -) *batch system*
+    - e.g. it is *hard to know* all the resources it has
+    - e.g. the *time* that it needs that resource is *changeable*
+    - e.g. *A process that requires lots of resources <* A process that requires a few resources 
+4. **Circular wait**: *number* all resources
+    - -) how to number? -> low flexibility
+* => Even though deadlock is not often, these ways *restrict* process too much.
 
 ### 2. deadlock avoidance
 
-(BEFORE) 
-manage resources allocation allowing only safe state 
-
-* State: safe -> unsafe -> deadlocked ∝ the num of allocated resources
-
-1. Single Instance<sub>/ resource types
-    - **Resource Allocation Graph Algorithm**) deadlock states: can be detected by cycles in the RSA graphs
-    - request edges, allocation edges, *claim edges*
-2. Multiple Instance<sub>/ resource types
-    - Banker's Algorithm) Safe states = ***Expect****=Max-Allocation* ***=<*** ***Available****=Total-ΣAllocation*
-        - ex. allocate -> return its Max -> allocate to other one -> .. => Total == Available
-
-=> 
-
+* = manage resources allocation only allowing safe state 
+* state: safe -> unsafe -> deadlocked (∝ #. allocated resources)
+1. when Single Instance<sub>/ resource types
+    - **Resource Allocation Graph Algorithm**) deadlock states: can be detected by cycles in the graph.
+        - request edges, allocation edges, *claim edges*(ㅇ---->ㅁ)
+    - Banker's Algorithm
+2. when Multiple Instances<sub>/ resource types
+    - **Banker's Algorithm**) safe states = **Expect**=Max-Allocation **<=** ***Available**=Total-ΣAllocation
+        - ex. *Available=*(allocate)*-Expect*->(return)*+Max*->(allocate)->(return)-> .. => *== Total*
 * -) need to declare all the resources in advance
 * -) fixed Total resources
 * -) even available -> not allocate => inefficient 
 
+## how to resolve Deadlock? - after
+
 ### 3. deadlock detection & recovery
 
-(AFTER) monitoring the resource-allocation graph and recovering it
-
-* NO MAX, allocate the available resources right away
+* = monitoring the graph and recovering it
+* NO MAX, allocate the Available resources right away
 
 #### deadlock detection
 
-1. Single Instance<sub>/ resource types
+1. when Single Instance<sub>/ resource types
     - **Resource Allocation Graph Algorithm**) deadlock states: can be detected by cycles in the RSA graphs
-    - request edges, allocation edges
-2. Multiple Instance<sub>/ resource types
-    - Banker's Algorithm)***Request=<Available****=Total-ΣAllocation*
-        - ex. first allocate to the process whose request == 000 ∵ it will return soon => Total == Available
+        - request edges, allocation edges
+2. when Multiple Instance<sub>/ resource types
+    - Banker's Algorithm) even Available==0, can allocate a process whose request == 0
+        - Available = -Request +(Request+Allocation)  -Request +(Request+Allocation) .. => == Total
+        - ex. 
 
 #### deadlock recovery
 
-1. process termination: all the processes || one by one in order 
-2. resource preemption: preempt a resource from the least-cost process => starvation => considering counts to call to preempt
+1. process termination: all the processes at the same time || one by one in order 
+2. resource preemption: preempt a resource from the *least-cost* process => BUT starvation => SO must consider count to be preempted
 
 ### 4. deadlock ignorance
 
-the way to resolve deadlock makes overload on system
-
-* => ignore deadlock on os
-* => users cover it
+* = the way to resolve deadlock makes overload on system
+* ignore deadlock on os => users cover it
