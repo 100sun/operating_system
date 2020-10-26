@@ -242,7 +242,28 @@ CPU <-> Program(user+OS)
 * mode_bit = 0: Kernel mode to execute a kernel process
 * mode_bit = 1: User mode to execute a user process
 
-## How to handle the sudden events by the devices when CPU busy
+### CPU-I/O Burst Cycle
+
+how to execute a process
+
+#### burst
+
+1. **CPU Burst**: when the process is being *executed* in the CPU
+2. **I/O Burst**: when the CPU is *waiting* for I/O for further execution
+3. ready queue: the process goes into the ready queue for the next CPU burst
+
+#### bound job
+
+* **CPU bound job** ex. simulation program (complicated)
+    - duration ↑ => frequency ↓
+    - *Long CPU burst <-> Short IO burst*
+* **IO bound job** ex. docx program (keyboard)
+    - duration ↓ => frequency ↑
+    - *short CPU burst <-> long IO burst*
+
+=> to save time: priority of IO bound job ↑ 
+
+## How to handle the sudden events by I/O
 
 ### Polling
 
@@ -398,34 +419,11 @@ Time-Sharing System by setting timer via * *
 
 <img src="https://github.com/100sun/operating_system/blob/master/multi-thread.JPG" height = "300"/>
 
-<Br/>
-
 # 4.1 Introduction to Scheduling
 
 ## What is scheduling
 
 the method that allows **when and what process cpu resource can be assigned** by order of ready queue of *PCB* for more efficiency between the processes whose most jobs are using *CPU VS I/O*
-
-## CPU-I/O Burst Cycle
-
-how to execute a process
-
-### burst
-
-1. **CPU Burst**: when the process is being *executed* in the CPU
-2. **I/O Burst**: when the CPU is *waiting* for I/O for further execution
-3. ready queue: the process goes into the ready queue for the next CPU burst
-
-### bound job
-
-* **CPU bound job** ex. simulation program (complicated)
-    - duration ↑ => frequency ↓
-    - *Long CPU burst <-> Short IO burst*
-* **IO bound job** ex. docx program (keyboard)
-    - duration ↓ => frequency ↑
-    - *short CPU burst <-> long IO burst*
-
-=> to save time: priority of IO bound job ↑ 
 
 ## CPU Schedulers
 
@@ -435,31 +433,9 @@ how to execute a process
 
 <img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
 
-# 4.3 Multilevel Queue
+# 4.2. Considerations for Scheduling
 
-by priority of the multiple ready-queues
-
-* ex. queue 0: HDD -> queue 1: CD-ROM -> ...
-
-### Priority
-
-||Static Priority|Dynamic Priority|
-|----|----|----|
-|priority|[cannot be changed](#Multilevel-Queue-Scheduling)|[can be changed](#Multilevel-Feedback-Scheduling)|
-|work|↓|↑|
-|efficiency|↓|↑|
-
-### State
-
-1. **ready**: dispatch *one* process
-    - priority in PCB: insert process in that specific priority queue 
-    - CPU scheduler: dispatch the prior process to the CPU
-2. **waiting**: make *multiple* processes be ready
-    - check IV table: make the prior process in that specific priority queue be ready 
-
-# 4.4 Scheduling Algorithm
-
-## The Criteria for Scheduling
+## Criteria
 
 CPU Utilization ↑ Throughput ↑ Waiting Time ↓ Response Time ↓ Turn-around time ↓
 
@@ -473,37 +449,84 @@ arrival < execution < first output < termination
 
 waiting time ⊂ response time ⊂ turn-around time
 
-### Process Priority  
+## Process Priority  
 
 * kernal > general process
 * foreground > background process
 * interactive > batch process
 * IO bound job > CPI bound job
 
-### Preemptive/Non-Preemptive Scheduling
+## Algorithm Evaluation
+
+w/ Gantt Chart
+
+### Average Waiting Time
+
+* Waiting time is the sum of the periods spent waiting in the ready queue. / num of processes
+* start time - arrival time (- burst time)
+
+### Average Turn-around Time
+
+* Turnaround time is the sum of the periods spent waiting to get into memory, waiting in the ready queue, executing on the CPU, and doing I/O. / num of processes
+* turn-around time - arrival time
+
+# 4.3. Scheduling Algorithm
 
 | | Preemptive Scheduling | Non-Preemptive Scheduling |
 | ---- | --------- | -------- |
 | when can start a new process | suspended by *OS or interrupted* | unless *termination* of the process or I/O |
 | disadvs | response time ↑ | throughput ↓ <Br/>(even IO bound job has to wait for a long time) |
-| [Scheduling Algorithm](#scheduling-algorithm) e.g. | SRT, RR | FCFS, SJF, HRN |
+| [Scheduling Algorithm](#scheduling-algorithm) e.g. | SRT, RR, MLQ, MLFQ | FCFS, SJF, HRN |
 
-## Scheduling Algorithms
+## Priority Scheduling
 
-### Priority Scheduling
+||Static Priority|Dynamic Priority|
+|----|----|----|
+|priority|[cannot be changed](#Multilevel-Queue-Scheduling)|[can be changed by time-interval](#Multilevel-Feedback-Scheduling)|
+|level of implementation|↓|↑|
+|efficiency|↓|↑|
 
-* ex: FCFS, SJF, HRN, [static, dynamic](#priority)
-* -: starvation(∵convoy effect), overhead(∵context-switching)-> low efficiency
-* => solution: [aging](#Multilevel-Feedback-Queue-Scheduling), considering waiting time as well(SRT)
+### FCFS, SJF, HRN, SRT
 
 ||FCFS|SJF|HRN|SRT|
 |---|---|---|---|---|
 |alleviation|First Come First Served|Shortest Job First|Highest Response ratio Next|Shortest Remaining Time|
-|type|non-preemptive|||preemptive(time slice O [re-scheduling](#context-switching) O)|
-|priority↑|waiting_time↓|burst_time↓|(waiting_time/CPU_burst_length)+1↓|remained_burst_time↓|
+|type|non-preemptive|non-preemptive|non-preemptive|preemptive(time slice O)|
+|type|static priority|dynamic priority|dynamic priority|dynamic priority|dynamic priority|
+|priority↑|waiting_time↓|burst_time↓|waiting_time/CPU_burst_length↑|remained_burst_time↓|
 |disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still|
 
-### Round Robin Scheduling
+### Multilevel Queue Scheduling
+
+static priority
+
+#### Multilevel Queue
+
+MLQ: How To Assign Priority of Process
+
+1. **ready** queue
+    1. enqueue process to the back in its priority queue 
+    2. CPU scheduler: dispatch the front process in priority 0 queue to the CPU
+2. **waiting** queue (blocked by IO request)
+    - make *multiple* processes be ready *by checking IV*
+
+### Multilevel Feedback Queue Scheduling
+
+by dynamic priority
+
+* each ready-queue: **priority↓ time slices⇑** the rate to burst CPU↓ CPU burst length⇑ 
+* ex: *IO burst job*: TS⇓* -> CPU burst job*: TS⇑.. *->* ***FCFS***: TS=∞(∵ it has been moved lots.. 😞)
+* *aging*: a process that waits too long in a lower-priority queue may be moved to a higher-priority queue.
+* hard to build and implement
+
+## disadvs of Priority Scheduling
+
+* starvation(∵convoy effect) => can be resolved by **again**
+* overhead(∵context-switching)
+
+* [aging](#Multilevel-Feedback-Queue-Scheduling), considering waiting time as well(SRT)
+
+## Round Robin Scheduling
 
 RR: just in order of the ready queue
 
@@ -515,52 +538,6 @@ response time ⇓
 
 * time slice⇑ ≈ FCFS: AWT⇑ -> starvation
 * time slice⇓ ≈ SRT: context switching -> low efficiency
-
-## Multilevel Queue Scheduling
-
-[multilevel-queue](#Multilevel-Queue)
-by static priority
-
-## Multilevel Feedback Queue Scheduling
-
-by dynamic priority
-
-* each ready-queue: **priority↓ time slices⇑** the rate to burst CPU↓ CPU burst length⇑ 
-* ex: *IO burst job*: TS⇓* -> CPU burst job*: TS⇑.. *->* ***FCFS***: TS=∞(∵ it has been moved lots.. 😞)
-* *aging*: a process that waits too long in a lower-priority queue may be moved to a higher-priority queue.
-* hard to build and implement
-
-## Algorithm Evaluation
-
-w/ Gantt Chart
-
-### Average Waiting Time
-
-* Waiting time is the sum of the periods spent waiting in the ready queue. / num of processes
-* time until started - arrival time (- burst time)
-
-### Average Turn-around Time
-
-* Turnaround time is the sum of the periods spent waiting to get into memory, waiting in the ready queue, executing on the CPU, and doing I/O. / num of processes
-* time until turned around - arrival time
-
-#### problem
-
-<details>
-<summary>open</summary>
-
-|process|arrival time|execution time|
-|---|---|---|
-|P1|0|20|
-|P2|1|14|
-|P3|2|8|
-|P4|3|16|
-
-<img src="https://github.com/100sun/operating_system/blob/master/cpu_scheduling_evaluation_ex.png" height=400/>
-
-</details>
-
-=> AWT/ART: SRT < SJF < HRN < FCFS < RR
 
 # 5.2 Shared Resource and Critical Section
 
