@@ -277,14 +277,30 @@ void main(void){
 }
 ```
 
-#### Types
+#### S/W Interrupt
 
-* **S/W Interrupt** via Kernal of OS
-    - *system call* is the job when *program1* requests OS to interrupt -> PC moves *from program1 to ISR* of OS
-    - *exception*: => check [what *mode*](#Dual-mode-when-CPU-works) of CPU now via mode_bit and *terminate* the program
-* [**H/W Interrupt**](#io-interrupt) via 𝜇C
-    - is the job when *IO device* requests OS to interrupt for program1 -> PC moves *from the program1 to ISR*
-* **Timer Interrupt**: Time-Sharing System by setting timer via * *
+via Kernal of OS
+
+* *system call* is the job when *program1* requests OS to interrupt -> PC moves *from program1 to ISR* of OS
+* *exception*: => check [what *mode*](#Dual-mode-when-CPU-works) of CPU now via mode_bit and *terminate* the program
+
+#### H/W Interrupt = I/O Interrupt
+
+via 𝜇C
+
+* is the job when *IO device* requests OS to interrupt for program1 -> PC moves *from the program1 to ISR*
+* more than 2 I/O interrupts can happen simultaneously 
+
+1. A mouse moved = An interrupt happened
+2. Current process: blocked -> out of CPU, in the I/O device queue
+2. Store the info of the paused process
+3. Execute ISR(Interrupt Service Routine) whose address is stored in **IVC**(Interrupt Vector Table).
+4. CPU: handle that interrupt
+5. Restart the process
+
+#### Timer Interrupt
+
+Time-Sharing System by setting timer via * *
 
 # 3.1 Introduction to Process
 
@@ -329,15 +345,6 @@ void main(void){
 
 <img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
 
-### IO Interrupt
-
-more than 2 io interrupts can happen simultaneously 
-
-1. mouse moved, interrupt happened -> current process: paused, out of CPU
-2. temporarily store the info of the process
-3. **Interrupt Vector Table**: address of ISR -> Interrupt Service Routine: code -> 
-4. CPU: handle that interrupt -> restart the process
-
 # 3.4 Context switching
 
 ## Process Context
@@ -366,7 +373,7 @@ more than 2 io interrupts can happen simultaneously
 * Hyper Thread = a set of 2 registers 
     - why? when context switching, overhead ↓
 
-## What Thread has
+## What a Thread has
 
 (A process has 1 address space - code+data+stack)
 
@@ -399,7 +406,7 @@ more than 2 io interrupts can happen simultaneously
 
 the method that allows **when and what process cpu resource can be assigned** by order of ready queue of *PCB* for more efficiency between the processes whose most jobs are using *CPU VS I/O*
 
-## CPU - I/O Burst Cycle
+## CPU-I/O Burst Cycle
 
 how to execute a process
 
