@@ -100,15 +100,15 @@
 
 ### Chp 6 Deadlock
 
-* [what is Deadlock?](#what-is-deadlock?)
-* [how to express Deadlock?](#how-to-express-deadlock?)
-* [when Deadlock happen?](#when-deadlock-happen?)
-* [how to resolve Deadlock? - before](#how-to-resolve-deadlock?---before)
-  + [1. deadlock prevention](#1-deadlock-prevention)
-  + [2. deadlock avoidance](#2-deadlock-avoidance)
-* [how to resolve Deadlock? - after](#how-to-resolve-deadlock?---after)
-  + [3. deadlock detection & recovery](#3-deadlock-detection-&-recovery)
-  + [4. deadlock ignorance](#4-deadlock-ignorance)
+  + [what is Deadlock?](#what-is-deadlock)
+  + [how to express Deadlock?](#how-to-express-deadlock)
+  + [when Deadlock happen?](#when-deadlock-happen)
+  + [how to resolve Deadlock? - before](#how-to-resolve-deadlock---before)
+    - [1. deadlock prevention](#1-deadlock-prevention)
+    - [2. deadlock avoidance](#2-deadlock-avoidance)
+  + [how to resolve Deadlock? - after](#how-to-resolve-deadlock---after)
+    - [3. deadlock detection & recovery](#3-deadlock-detection--recovery)
+    - [4. deadlock ignorance](#4-deadlock-ignorance)
 
 <hr/>
 
@@ -698,14 +698,14 @@ monitor m{
 
 ##### Chp 6 Deadlock
 
-### what is Deadlock?
+## what is Deadlock?
 
 || Deadlock | Starvation |
 |--|--|--|
 |process|*All* processes keep *waiting* for each other. ∵ *Circular* wait|High priority processes keep executing and *low* priority processes are *blocked*|
 |resource|Resources are *blocked* by the *processes*|Resources are continuously *utilized* by high *priority* processes|
 
-### how to express Deadlock?
+## how to express Deadlock?
 
 * Resource-Allocation Graph
     - **process** : ㅇ
