@@ -2,12 +2,14 @@
 
 ### Chp 1 Introduction to OS
 
+* [contents](#contents)
 * [1.1 Introduction to OS](#11-introduction-to-os)
   + [Computer](#computer)
   + [System Hierarchy](#system-hierarchy)
   + [role of OS](#role-of-os)
 * [1.2 History of OS](#12-history-of-os)
-  + [1940s: ENIAC](#1940s-eniac)
+  + [1940s: no OS - vacuum tubes](#1940s-no-os---vacuum-tubes)
+  + [early 1950s: no os - operator](#early-1950s-no-os---operator)
   + [1950s: batch processing system](#1950s-batch-processing-system)
   + [early 1960s: interactive system](#early-1960s-interactive-system)
   + [mid 1960s: multiprogramming system](#mid-1960s-multiprogramming-system)
@@ -20,7 +22,7 @@
 
 * [2.1 basic configuration](#21-basic-configuration)
   + [international units](#international-units)
-  + [how digital system works: **clocking**](#how-digital-system-works-clocking)
+  + [how digital H/W system works: by **clocking**](#how-digital-hw-system-works-by-clocking)
 * [2.2.1 CPU](#221-cpu)
   + [how to execute a source file](#how-to-execute-a-source-file)
   + [Instruction Cycle](#instruction-cycle)
@@ -30,42 +32,40 @@
   + [Why Protection is needed](#why-protection-is-needed)
   + [Booting Process](#booting-process)
 * [2.3 computer performance improvement technology](#23-computer-performance-improvement-technology)
-  + [Dual mode when CPU works](#dual-mode-when-cpu-works)
-  + [Hardware Mechanism](#hardware-mechanism)
+  + [CPU execution mode: dual mode](#cpu-execution-mode-dual-mode)
+  + [How to handle the sudden events by the devices when CPU busy](#how-to-handle-the-sudden-events-by-the-devices-when-cpu-busy)
 
 ### Chp 3 Process and Thread
 
 * [3.1 Introduction to Process](#31-introduction-to-process)
   + [program vs process](#program-vs-process)
-  + [Architecture](#architecture)
+  + [2 spaces of memory](#2-spaces-of-memory)
 * [3.2 Operation of Process](#32-operation-of-process)
-  + [process hierarchy](#process-hierarchy)
-* [3.3 States of a Process](#33-states-of-a-process)
-* [3.4 Process Control Block & Context switching](#34-process-control-block-&-context-switching)
-  + [PCB](#pcb)
+* [3.3 Five States of a Process](#33-five-states-of-a-process)
+* [3.4 Context switching](#34-context-switching)
+  + [Process Context](#process-context)
   + [Context switching](#context-switching)
 * [3.5 Thread](#35-thread)
   + [What is Thread](#what-is-thread)
-  + [Concurrency](#concurrency)
-  + [Multi-Thread](#multi-thread)
+  + [What Thread has](#what-thread-has)
+  + [Thread States](#thread-states)
+  + [Single-Thread VS Multi-Thread](#single-thread-vs-multi-thread)
 
 ### Chp 4 CPU Scheduling 
 
 * [4.1 Introduction to Scheduling](#41-introduction-to-scheduling)
   + [What is scheduling](#what-is-scheduling)
-  + [CPU-I/O Burst Cycle](#cpu-io-burst-cycle)
+  + [CPU - I/O Burst Cycle](#cpu---io-burst-cycle)
   + [CPU Schedulers](#cpu-schedulers)
-* [4.2 Considerations for Scheduling](#42-considerations-for-scheduling)
-  + [Scheduling Algorithms](#scheduling-algorithms)
   + [Process Priority](#process-priority)
 * [4.3 Multilevel Queue](#43-multilevel-queue)
   + [Multilevel Queue](#multilevel-queue)
 * [4.4 Scheduling Algorithm](#44-scheduling-algorithm)
-  + [Priority Scheduling](#priority-scheduling)
-  + [Round Robin Scheduling](#round-robin-scheduling)
+  + [The Criteria for Scheduling](#the-criteria-for-scheduling)
+  + [time criteria](#time-criteria)
+  + [Scheduling Algorithms](#scheduling-algorithms)
   + [Multilevel Queue Scheduling](#multilevel-queue-scheduling)
   + [Multilevel Feedback Queue Scheduling](#multilevel-feedback-queue-scheduling)
-  + [Scheduling Criteria](#scheduling-criteria)
   + [Algorithm Evaluation](#algorithm-evaluation)
 
 ### Chp 5 Process Synchronization
@@ -329,6 +329,15 @@ void main(void){
 
 <img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
 
+### IO Interrupt
+
+more than 2 io interrupts can happen simultaneously 
+
+1. mouse moved, interrupt happened -> current process: paused, out of CPU
+2. temporarily store the info of the process
+3. **Interrupt Vector Table**: address of ISR -> Interrupt Service Routine: code -> 
+4. CPU: handle that interrupt -> restart the process
+
 # 3.4 Context switching
 
 ## Process Context
@@ -419,39 +428,7 @@ how to execute a process
 
 <img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
 
-### Queuing diagram
-
-# 4.2 Considerations for Scheduling
-
-## Scheduling Algorithms
-
-### Preemptive/Non-Preemptive Scheduling
-
-| basis | Preemptive Scheduling | Non-Preemptive Scheduling |
-| ---- | ---- | ---- |
-| when can start a new process | suspended by *OS or interrupted* | unless *termination* of the process or I/O |
-| --- | response time ↑ | throughput ↓ <Br/>(even IO bound job has to wait for a long time) |
-| [e.g.](#Priority-Scheduling) | SRT, RR | FCFS, SJF, HRN |
-
-## Process Priority  
-
-* kernal > general process
-* foreground > background process
-* interactive > batch process
-* IO bound job > CPI bound job
-
 # 4.3 Multilevel Queue
-
-### IO Interrupt
-
-more than 2 io interrupts can happen simultaneously 
-
-1. mouse moved, interrupt happened -> current process: paused, out of CPU
-2. temporarily store the info of the process
-3. **Interrupt Vector Table**: address of ISR -> Interrupt Service Routine: code -> 
-4. CPU: handle that interrupt -> restart the process
-
-## Multilevel Queue
 
 by priority of the multiple ready-queues
 
@@ -475,7 +452,38 @@ by priority of the multiple ready-queues
 
 # 4.4 Scheduling Algorithm
 
-## Priority Scheduling
+## The Criteria for Scheduling
+
+CPU Utilization ↑ Throughput ↑ Waiting Time ↓ Response Time ↓ Turn-around time ↓
+
+### time criteria
+
+arrival < execution < first output < termination 
+
+* waiting time: ~ until execution of process
+* response time: ~ until first output of process
+* turn-around time: ~ until termination and turn-out all the resources
+
+waiting time ⊂ response time ⊂ turn-around time
+
+### Process Priority  
+
+* kernal > general process
+* foreground > background process
+* interactive > batch process
+* IO bound job > CPI bound job
+
+### Preemptive/Non-Preemptive Scheduling
+
+| | Preemptive Scheduling | Non-Preemptive Scheduling |
+| ---- | --------- | -------- |
+| when can start a new process | suspended by *OS or interrupted* | unless *termination* of the process or I/O |
+| disadvs | response time ↑ | throughput ↓ <Br/>(even IO bound job has to wait for a long time) |
+| [Scheduling Algorithm](#scheduling-algorithm) e.g. | SRT, RR | FCFS, SJF, HRN |
+
+## Scheduling Algorithms
+
+### Priority Scheduling
 
 * ex: FCFS, SJF, HRN, [static, dynamic](#priority)
 * -: starvation(∵convoy effect), overhead(∵context-switching)-> low efficiency
@@ -488,15 +496,15 @@ by priority of the multiple ready-queues
 |priority↑|waiting_time↓|burst_time↓|(waiting_time/CPU_burst_length)+1↓|remained_burst_time↓|
 |disadvs|low efficiency<Br/>∵convoy effect(AWT⇑)|starvation<br/>∵when the first process takes too long|starvation still|
 
-## Round Robin Scheduling
+### Round Robin Scheduling
 
 RR: just in order of the ready queue
 
-### advs of RR
+#### advs of RR
 
 response time ⇓
 
-### disadvs of RR
+#### disadvs of RR
 
 * time slice⇑ ≈ FCFS: AWT⇑ -> starvation
 * time slice⇓ ≈ SRT: context switching -> low efficiency
@@ -514,18 +522,6 @@ by dynamic priority
 * ex: *IO burst job*: TS⇓* -> CPU burst job*: TS⇑.. *->* ***FCFS***: TS=∞(∵ it has been moved lots.. 😞)
 * *aging*: a process that waits too long in a lower-priority queue may be moved to a higher-priority queue.
 * hard to build and implement
-
-## Scheduling Criteria
-
-### what is better
-
-CPU Utilization ↑ Throughput ↑ Waiting Time ↓ Response Time ↓ Turn-around time ↓
-
-#### waiting time < response time < turn-around time
-
-* waiting time: ~ start execution of process
-* response time: ~ start first output of process
-* turn-around time: ~ terminate and turn out all the resources
 
 ## Algorithm Evaluation
 
@@ -556,6 +552,7 @@ w/ Gantt Chart
 <img src="https://github.com/100sun/operating_system/blob/master/cpu_scheduling_evaluation_ex.png" height=400/>
 
 </details>
+
 => AWT/ART: SRT < SJF < HRN < FCFS < RR
 
 # 5.2 Shared Resource and Critical Section
