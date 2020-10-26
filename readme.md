@@ -654,7 +654,7 @@ V(){
 }
 ```
 
-<img src="https://github.com/100sun/operating_system/blob/master/semaphore-o.JPG" width="400"><img src="https://github.com/100sun/operating_system/blob/master/semaphore-x.JPG" width="400">
+<img src="https://github.com/100sun/operating_system/blob/master/semaphore-x.JPG" width="400"><img src="https://github.com/100sun/operating_system/blob/master/semaphore-o.JPG" width="400">
 
 ### 5. **Monitor**
 
