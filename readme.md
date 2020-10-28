@@ -2,15 +2,16 @@
 
 # Contents
 
-### Chp 1 Introduction to OS
-
 * [Contents](#contents)
-    - [Chp 1 Introduction to OS](#chp-1-introduction-to-os)
     - [Chp 1 Introduction to OS](#chp-1-introduction-to-os)
     - [Chp 2 Computer Architecture](#chp-2-computer-architecture)
     - [Chp 3 Process and Thread](#chp-3-process-and-thread)
     - [Chp 4 CPU Scheduling](#chp-4-cpu-scheduling)
     - [Chp 5 Process Synchronization](#chp-5-process-synchronization)
+    - [Chp 6 Deadlock](#chp-6-deadlock)
+
+### Chp 1 Introduction to OS
+
 * [1.1 Introduction to OS](#11-introduction-to-os)
   + [Computer](#computer)
   + [System Hierarchy](#system-hierarchy)
@@ -76,8 +77,8 @@
   + [Process Priority](#process-priority)
 * [4.3. Scheduling Algorithm](#43-scheduling-algorithm)
   + [types](#types)
-    - [preempt?](#preempt?)
-    - [give priority?](#give-priority?)
+    - [preempt?](#preempt)
+    - [give priority?](#give-priority)
   + [FCFS, SJF, HRN, RR, MSQ, MSFQ](#fcfs-sjf-hrn-rr-msq-msfq)
   + [Scheduling Algorithm Evaluation](#scheduling-algorithm-evaluation)
     - [Average Waiting Time](#average-waiting-time)
@@ -367,7 +368,7 @@ Time-Sharing System by setting timer via * *
 | process - PCB | program + PCB |
 
 1. A **program** on *HDD* got a **PCB** from OS space of memory  => A **process** on user space of *memory*
-2. The **process** returned the **PCB** => ** **
+2. The **process** returned the **PCB** => **program**
 * Process Control Block contains process-related info e.g. *pointer*(for queue)*, process state, PID*(unique), registers' value, memory limits, list of open files
 
 ## two spaces of memory 
@@ -396,7 +397,7 @@ Time-Sharing System by setting timer via * *
 
 ### ready, running, blocked, suspended ready, suspended blocked
 
-<img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
+<img src="./process-state-diagram.jpg" height="400"/>
 
 # 3.4 Context switching
 
@@ -449,7 +450,7 @@ Time-Sharing System by setting timer via * *
     - ex. explorer
     - +) time, resource, efficiency
 
-<img src="https://github.com/100sun/operating_system/blob/master/multi-thread.JPG" height = "300"/>
+<img src="./multi-thread.jpg" height = "300"/>
 
 ##### Chp 4 CPU Scheduling 
 
@@ -465,7 +466,7 @@ the method that allows **when and what process cpu resource can be assigned** by
 * mid-term scheduler=the degree of multiprogramming↓ : takes process from running
 * short-term scheduler = CPU scheduler: takes the process from ready
 
-<img src="https://github.com/100sun/operating_system/blob/master/process-state-diagram.JPG" height="400"/>
+<img src="./process-state-diagram.jpg" height="400"/>
 
 # 4.2. Considerations for Scheduling
 
@@ -654,7 +655,7 @@ V(){
 }
 ```
 
-<img src="https://github.com/100sun/operating_system/blob/master/semaphore-x.JPG" width="400"><img src="https://github.com/100sun/operating_system/blob/master/semaphore-o.JPG" width="400">
+<img src="./semaphore-x.jpg" width="400"><img src="./semaphore-o.jpg" width="400">
 
 ### 5. **Monitor**
 
