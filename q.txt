@@ -1,5 +1,0 @@
-1. static priority scheduling algorithm의 예로는 MLQ, FCFS
-dynamic priority scheduling algorithm의 예로는 MLQF, SJF, HRN, SRT
-이 priority scheduling algorithm 중 aging을 적용한 예로는 HRN, MLQF로 생각해도 될까요?
-2. 7주차 프린트 중 23쪽에서는 P2이후 P1과 P3모두 가능하지만 P1을 먼저 하셨고, 24쪽에서는 P3이후 P0,P2,P4 모두 가능하지만 아래방향으로 가므로 P4를 먼저 한다고 말씀하셨는데, 어떤 방향으로 계산을 해야할지 헷갈려서요..!
-
