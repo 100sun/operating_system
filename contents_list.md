@@ -1,5 +1,6 @@
 # Contents
 ### [Chp 1 Introduction to OS](#chp-1-introduction-to-os-1)
+* [Contents](#contents)
 * [1.1 Introduction to OS](#11-introduction-to-os)
 * [1.2 History of OS](#12-history-of-os)
 ### [Chp 2 Computer Architecture](#chp-2-computer-architecture-1)
@@ -21,5 +22,14 @@
 * [5.2 Shared Resource and Critical Section](#52-shared-resource-and-critical-section)
 * [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
 ### [Chp 6 Deadlock](#chp-6-deadlock-1)
-### [Chp 7 Physical Memory Management](#chp-7-physical-memory-management-1)
+### [Chp 7 Physical Memory](#chp-7-physical-memory-1)
+* [7.1 Introduction to Physical Memory Management](#71-introduction-to-physical-memory-management)
+* [7.2 Memory Address](#72-memory-address)
+* [7.3 Memory Allocation in Single Programming](#73-memory-allocation-in-single-programming)
+* [7.4 Memory Allocation in Multi Programming](#74-memory-allocation-in-multi-programming)
+### [Chp 8 Virtual Memory](#chp-8-virtual-memory-1)
+* [8.1 Introduction to Virtual Memory](#81-introduction-to-virtual-memory)
+* [7.2 Paging](#72-paging)
+* [7.3 Segmentation](#73-segmentation)
+* [7.4 Segmentation-paging](#74-segmentation-paging)
 <hr/>

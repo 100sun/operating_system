@@ -4,6 +4,7 @@
 
 ### [Chp 1 Introduction to OS](#chp-1-introduction-to-os-1)
 
+* [Contents](#contents)
 * [1.1 Introduction to OS](#11-introduction-to-os)
 * [1.2 History of OS](#12-history-of-os)
 
@@ -35,7 +36,19 @@
 
 ### [Chp 6 Deadlock](#chp-6-deadlock-1)
 
-### [Chp 7 Physical Memory Management](#chp-7-physical-memory-management-1)
+### [Chp 7 Physical Memory](#chp-7-physical-memory-1)
+
+* [7.1 Introduction to Physical Memory Management](#71-introduction-to-physical-memory-management)
+* [7.2 Memory Address](#72-memory-address)
+* [7.3 Memory Allocation in Single Programming](#73-memory-allocation-in-single-programming)
+* [7.4 Memory Allocation in Multi Programming](#74-memory-allocation-in-multi-programming)
+
+### [Chp 8 Virtual Memory](#chp-8-virtual-memory-1)
+
+* [8.1 Introduction to Virtual Memory](#81-introduction-to-virtual-memory)
+* [7.2 Paging](#72-paging)
+* [7.3 Segmentation](#73-segmentation)
+* [7.4 Segmentation-paging](#74-segmentation-paging)
 
 <hr/>
 
@@ -709,12 +722,32 @@ monitor m{
 * = the way to resolve deadlock makes overload on system
 * ignore deadlock on os => users cover it
 
-##### Chp 7 Physical Memory Management
+##### Chp 7 Physical Memory
 
-## Introduction
+# 7.1 Introduction to Physical Memory Management
 
-## Memory Address
+# 7.2 Memory Address
 
-## Memory Allocation in Single Programming
+# 7.3 Memory Allocation in Single Programming
 
-## Memory Allocation in Multi Programming
+# 7.4 Memory Allocation in Multi Programming
+
+##### Chp 8 Virtual Memory
+
+# 8.1 Introduction to Virtual Memory
+
+## Why
+
+### +) Programmer
+
+* convenience of programming
+
+### +) Process
+
+* convenience of using memory
+
+# 7.2 Paging 
+
+# 7.3 Segmentation
+
+# 7.4 Segmentation-paging
