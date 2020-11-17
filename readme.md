@@ -4,7 +4,6 @@
 
 ### [Chp 1 Introduction to OS](#chp-1-introduction-to-os-1)
 
-* [Contents](#contents)
 * [1.1 Introduction to OS](#11-introduction-to-os)
 * [1.2 History of OS](#12-history-of-os)
 
@@ -35,6 +34,12 @@
 * [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
 
 ### [Chp 6 Deadlock](#chp-6-deadlock-1)
+
+* [6.1 what is Deadlock?](#61-what-is-deadlock)
+* [6.2 how to express Deadlock?](#62-how-to-express-deadlock)
+* [6.3 when Deadlock happen?](#63-when-deadlock-happen)
+* [6.4 how to resolve Deadlock? - before](#64-how-to-resolve-deadlock---before)
+* [6.5 how to resolve Deadlock? - after](#65-how-to-resolve-deadlock---after)
 
 ### [Chp 7 Physical Memory](#chp-7-physical-memory-1)
 
@@ -638,14 +643,14 @@ monitor m{
 
 ##### Chp 6 Deadlock
 
-## what is Deadlock?
+# 6.1 what is Deadlock?
 
 || Deadlock | Starvation |
 |--|--|--|
 |process|*All* processes keep *waiting* for each other. ∵ *Circular* wait|High priority processes keep executing and *low* priority processes are *blocked*|
 |resource|Resources are *blocked* by the *processes*|Resources are continuously *utilized* by high *priority* processes|
 
-## how to express Deadlock?
+# 6.2 how to express Deadlock?
 
 * Resource-Allocation Graph
     - **process** : ㅇ
@@ -654,7 +659,7 @@ monitor m{
     - ㅇ **--->** ㅁ : request edges
 * resources: request -> use -> release 
 
-## when Deadlock happen?
+# 6.3 when Deadlock happen?
 
 * e.g Dining philosophers problem: at a round table
 * when all the four conditions occur.
@@ -664,7 +669,7 @@ monitor m{
 3. **Hold and Wait**: no monopolization of all forks
 4. **Circular wait**: no in-order linear table
 
-## how to resolve Deadlock? - before
+# 6.4 how to resolve Deadlock? - before
 
 ### 1. deadlock prevention
 
@@ -695,7 +700,7 @@ monitor m{
 * -) fixed Total resources
 * -) even available -> not allocate => inefficient 
 
-## how to resolve Deadlock? - after
+# 6.5 how to resolve Deadlock? - after
 
 ### 3. deadlock detection & recovery
 

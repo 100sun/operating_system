@@ -1,6 +1,5 @@
 # Contents
 ### [Chp 1 Introduction to OS](#chp-1-introduction-to-os-1)
-* [Contents](#contents)
 * [1.1 Introduction to OS](#11-introduction-to-os)
 * [1.2 History of OS](#12-history-of-os)
 ### [Chp 2 Computer Architecture](#chp-2-computer-architecture-1)
@@ -22,6 +21,11 @@
 * [5.2 Shared Resource and Critical Section](#52-shared-resource-and-critical-section)
 * [5.3 Critical Section Synchronization](#53-critical-section-synchronization)
 ### [Chp 6 Deadlock](#chp-6-deadlock-1)
+* [6.1 what is Deadlock?](#61-what-is-deadlock)
+* [6.2 how to express Deadlock?](#62-how-to-express-deadlock)
+* [6.3 when Deadlock happen?](#63-when-deadlock-happen)
+* [6.4 how to resolve Deadlock? - before](#64-how-to-resolve-deadlock---before)
+* [6.5 how to resolve Deadlock? - after](#65-how-to-resolve-deadlock---after)
 ### [Chp 7 Physical Memory](#chp-7-physical-memory-1)
 * [7.1 Introduction to Physical Memory Management](#71-introduction-to-physical-memory-management)
 * [7.2 Memory Address](#72-memory-address)
