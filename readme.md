@@ -731,6 +731,19 @@ monitor m{
 
 # 7.1 Introduction to Physical Memory Management
 
+## Memory Management?
+
+: OS's 2nd role
+
+### von Neumann architecture
+
+* **CPU <-> Memory <-> HDD**
+* CPU <-X-> HDD
+
+=> booting OS: HDD -> Memory : OS does management of 1. process 2. memory 3. file 4. IO 
+
+## Memory
+
 # 7.2 Memory Address
 
 # 7.3 Memory Allocation in Single Programming
