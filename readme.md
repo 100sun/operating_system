@@ -41,7 +41,7 @@
 * [6.4 how to resolve Deadlock? - before](#64-how-to-resolve-deadlock---before)
 * [6.5 how to resolve Deadlock? - after](#65-how-to-resolve-deadlock---after)
 
-### [Chp 7 Physical Memory](#chp-7-physical-memory-management-1)
+### [Chp 7 Physical Memory Management](#chp-7-physical-memory-management-1)
 
 * [7.1 Introduction to Physical Memory Management](#71-introduction-to-physical-memory-management)
 * [7.2 Memory Address](#72-memory-address)
