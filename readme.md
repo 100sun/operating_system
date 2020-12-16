@@ -41,7 +41,7 @@
 * [6.4 how to resolve Deadlock? - before](#64-how-to-resolve-deadlock---before)
 * [6.5 how to resolve Deadlock? - after](#65-how-to-resolve-deadlock---after)
 
-### [Chp 7 Physical Memory](#chp-7-physical-memory-1)
+### [Chp 7 Physical Memory](#chp-7-physical-memory-management-1)
 
 * [7.1 Introduction to Physical Memory Management](#71-introduction-to-physical-memory-management)
 * [7.2 Memory Address](#72-memory-address)
@@ -725,17 +725,13 @@ monitor m{
 ### 4. deadlock ignorance
 
 * = the way to resolve deadlock makes overload on system
-* ignore deadlock on os => users cover it
+* ignore deadlock on os => users cove r it
 
-##### Chp 7 Physical Memory
+##### Chp 7 Physical Memory Management
 
 # 7.1 Introduction to Physical Memory Management
 
-## Memory Management?
-
-: OS's 2nd role
-
-### von Neumann architecture
+## von Neumann architecture
 
 * **CPU <-> Memory <-> HDD**
 * CPU <-X-> HDD
@@ -744,11 +740,32 @@ monitor m{
 
 ## Memory
 
+* 1byte(8bit) - 1 Address
+* address and data
+* memory overlay, dynamic loading, paging
+* swap in & out
+
 # 7.2 Memory Address
+
+* MMU = MemoryManagementUnit
+
+## address binding
+
+1. compile time binding
+2. load time binding 
+3. run time binding
 
 # 7.3 Memory Allocation in Single Programming
 
+* static VS fixed 
+
 # 7.4 Memory Allocation in Multi Programming
+
+## to solve external fragmentation
+
+1. first fit
+2. best fit
+3. worst fit
 
 ##### Chp 8 Virtual Memory
 
@@ -769,6 +786,7 @@ monitor m{
 # 7.3 Segmentation
 
 # 7.4 Segmentation-paging
+
 ##### Chp 10 I/O system and Memory
 
 ##### Chp 11 File System
