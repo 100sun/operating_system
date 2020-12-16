@@ -757,6 +757,7 @@ monitor m{
 
 # 7.3 Memory Allocation in Single Programming
 
+* contiguous VS noncontiguous
 * static VS fixed 
 
 # 7.4 Memory Allocation in Multi Programming
@@ -767,26 +768,32 @@ monitor m{
 2. best fit
 3. worst fit
 
-##### Chp 8 Virtual Memory
-
-# 8.1 Introduction to Virtual Memory
-
-## Why
-
-### +) Programmer
-
-* convenience of programming
-
-### +) Process
-
-* convenience of using memory
-
-# 7.2 Paging 
-
-# 7.3 Segmentation
-
-# 7.4 Segmentation-paging
-
-##### Chp 10 I/O system and Memory
-
 ##### Chp 11 File System
+
+# 11.1 File
+
+* disk VS file
+* file manager VS file descriptor
+* block : unit
+* = execution file + data file
+
+## File Access Method
+
+1. sequential access
+2. direct access
+3. indexed sequential access
+
+# 11.2 Directory
+
+* root dir
+* dir file
+* absolute path VS relative path
+
+# 11.3 Disk File Allocation
+
+1. contiguous allocation
+2. non-contiguous allocation
+    1. linked allocation
+    2. index allocation
+
+* Free-space management
